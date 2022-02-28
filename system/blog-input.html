@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Inoriの博客管理页</title>
+    <link href="../image/gc.jpg" rel="shortcut icon" type="image/x-ico">
+    <link rel="stylesheet" href="../lib/element-plus/index.css">
+    <link rel="stylesheet" href="../css/blog.css">
+    <link rel="stylesheet" href="../css/system.css">
+    <link rel="stylesheet" href="../lib/bootstrap/bootstrap-icons.css">
+    <link rel="stylesheet" href="../lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../lib/editormd/css/editormd.min.css">
+    <script type="text/javascript" src="../lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../lib/vue/vue.js"></script>
+    <script type="text/javascript" src="../lib/axios/axios.min.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+</head>
+<body>
+
+<section id="system-main-container">
+
+    <nav id="nav" class="system-gird-header">
+        <div class="site-top system-site-top">
+            <div class="system-site-branding">管理后台</div>
+            <div class="lower-cantiner m-mobile-hide">
+                <div class="lower">
+                    <ul>
+                        <li>
+                            <a href="blog.html" class="m-margin-left-small">
+                                <i class="bi-house-fill"></i><span class="fa">博客管理</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="type.html" class="m-margin-left-small">
+                                <i class="bi-front"></i><span class="fa">分类管理</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="picture.html" class="m-margin-left-small">
+                                <i class="bi-images"></i><span class="fa">照片墙管理</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="user-info">
+                <div class="user-avatar">
+                    <img src="../image/gc.jpg" alt/>
+                    <span class="user-info-span">Inori</span>
+                    <span class="logout"></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-container">
+        <div class="blog-input">
+            <div class="title-input">
+                <label for="title">博客标题:</label>
+                <input id="title" class="title" v-model="title" type="text" placeholder="标题">
+            </div>
+            <div class="type-input">
+                <label for="type">博客分类:</label>
+                <input id="type" v-model="typeName" class="type-input-input" placeholder="请选择" readonly="readonly"
+                       @click="typeShow">
+                <i class="el-icon-arrow-down"></i>
+                <ul class="type-input-ul" v-if="typeFlag">
+                    <li class="type-input-li" v-for="item of types" @click="typeChoice(item)">
+                        <span class="type-input-span">{{item.name}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="flag-input">
+                <label for="flag">博客标签:</label>
+                <input id="flag" v-model="flag" class="flag-input-input" placeholder="请选择" readonly="readonly"
+                       @click="flagShow" @keyup.tab.prevent="typeKeypress">
+                <i class="el-icon-arrow-down"></i>
+                <ul class="flag-input-ul" v-if="flagFlag">
+                    <li class="flag-input-li" @click="flagChoice('原创')">
+                        <span class="flag-input-span">原创</span>
+                    </li>
+                    <li class="flag-input-li" @click="flagChoice('转载')">
+                        <span class="flag-input-span">转载</span>
+                    </li>
+                    <li class="flag-input-li" @click="flagChoice('翻译')">
+                        <span class="flag-input-span">翻译</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="image-input">
+                <label for="file">博客首图:</label>
+                <div class="avatar-uploader">
+                    <div v-if="firstPicturePath" style="width: 100%;height: 100%;">
+                        <img :src="firstPicturePath" class="avatar">
+                        <span class="image-span">
+                            <i class="el-icon-delete avatar-delete-icon" @click="handleRemove"></i>
+                        </span>
+                    </div>
+                    <div v-else>
+                        <i class="el-icon-plus avatar-uploader-icon" @click="start"></i>
+                        <input type="file" id="file" multiple accept="image/*" style="display: none"
+                               @change="referenceUpload($event)">
+                    </div>
+                </div>
+            </div>
+            <div class="desc-input">
+                <label for="description">博客描述:</label>
+                <div>
+                    <textarea v-model="description" id="description" name="description" placeholder="描述..."
+                              @keyup.tab.prevent="flagKeypress" maxlength="200"></textarea>
+                </div>
+            </div>
+            <div class="content-input">
+                <label for="content">博客内容:</label>
+                <div id="md-context">
+                    <textarea v-model="content" id="content" name="content" placeholder="内容..."
+                              style="display: none"></textarea>
+                </div>
+            </div>
+            <div style="padding-top: 30px">
+                <button class="blog-button" type="button" onclick="window.history.go(-1)">返回</button>
+                <button class="blog-button-save" type="button" v-if="id == null" @click="save">保存</button>
+                <button class="blog-button-push" type="button" @click="push">确认</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="tip">
+        <p id="blog-common" class="common-success">{{message}}</p>
+    </div>
+
+</section>
+
+<script type="text/javascript" src="../lib/editormd/editormd.min.js"></script>
+<script type="text/javascript" src="../js/system.js"></script>
+<script type="text/javascript">
+
+    Vue.createApp({
+        data() {
+            return {
+                id: null,
+                title: "",
+                types: [],
+                typeId: null,
+                typeName: "",
+                flag: "",
+                firstPicture: null,
+                firstPicturePath: "",
+                description: "",
+                content: "",
+                status: null,
+                typeFlag: false,
+                flagFlag: false,
+                message: ""
+            }
+        },
+        created: function () {
+            let inori_token = inori.cookie.get("INORI_TOKEN");
+            if (inori_token === null || inori_token === "" || inori_token === "undefined") {
+                window.location.href = "login.html";
+            } else {
+                this.itemType();
+
+                this.id = inori.store.get("BLOG_ID");
+                if (this.id !== null) {
+                    inori.store.del("BLOG_ID");
+                    this.updateGet(this.id);
+                }
+
+                this.$nextTick(() => {
+                    let contextEditor;
+                    $(function () {
+                        contextEditor = editormd("md-context", {
+                            width: 1008,
+                            height: 640,
+                            syncScrolling: "single",
+                            path: "../lib/editormd/lib/",
+                            autoFocus: false
+                        });
+                    });
+                });
+            }
+        },
+        mounted: function () {
+            document.addEventListener('click', (e) => {
+                let elem = e.target || e.srcElement;
+                if (elem.className !== "type-input-ul" && elem.className !== "type-input-li" && elem.className !== "type-input-span" && elem.className !== "type-input-input") {
+                    this.typeFlag = false;
+                }
+                if (elem.className !== "flag-input-ul" && elem.className !== "flag-input-li" && elem.className !== "flag-input-span" && elem.className !== "flag-input-input") {
+                    this.flagFlag = false;
+                }
+            });
+        },
+        methods: {
+            itemType() {
+                inori.http.post("/system/type/list", {
+                    "pageNo": this.pageNo,
+                    "pageSize": 99999
+                }).then((resp) => {
+                    this.types = resp.data.data.records;
+                }).catch(() => {
+                    this.setMessage("服务器异常", "common-error");
+                });
+            },
+            updateGet(blogId) {
+                inori.http.post("/system/blog/update/get", {
+                    "id": blogId
+                }).then((resp) => {
+                    let result = resp.data.data;
+                    this.title = result.title;
+                    this.typeId = result.typeId;
+                    this.typeName = result.typeName;
+                    this.flag = result.flag;
+                    this.firstPicture = result.firstPicture;
+                    this.firstPicturePath = result.firstPicturePath;
+                    this.description = result.description;
+                    this.content = result.content;
+                }).catch(() => {
+                    this.setMessage("服务器异常", "common-error");
+                });
+            },
+            typeShow() {
+                this.typeFlag = !this.typeFlag;
+            },
+            typeKeypress(e) {
+                this.typeFlag = false;
+            },
+            typeChoice(item) {
+                this.typeId = item.id;
+                this.typeName = item.name;
+                this.typeFlag = false;
+            },
+            flagShow() {
+                this.flagFlag = !this.flagFlag;
+            },
+            flagKeypress() {
+                this.flagFlag = false;
+            },
+            flagChoice(flag) {
+                this.flag = flag;
+                this.flagFlag = false;
+            },
+            handleRemove() {
+                this.firstPicturePath = "";
+            },
+            start() {
+                $('#file').click();
+            },
+            referenceUpload(event) {
+                let formData = new FormData();
+                formData.append("file", event.target.files[0]);
+                formData.append("typeCode", "img");
+
+                inori.http.post("/tool/file/upload", formData, {
+                    headers: {"Content-Type": "multipart/form-data"}
+                }).then((resp) => {
+                    let result = resp.data;
+                    if (result.code === 200) {
+                        this.firstPicture = result.data.resId;
+                        this.firstPicturePath = result.data.resUrl;
+                        this.setMessage("上传成功", "common-success");
+                    } else {
+                        this.setMessage(result.data.msg, "common-error");
+                    }
+                }).catch(() => {
+                    this.setMessage("服务器异常", "common-error");
+                });
+            },
+            save() {
+                this.status = 0;
+                this.pushBlog();
+            },
+            push() {
+                this.content = $('#content').text();
+                this.status = 1;
+                this.pushBlog();
+            },
+            pushBlog() {
+                if (this.id != null) {
+                    this.blog("/system/blog/update", "编辑成功");
+                } else {
+                    this.blog("/system/blog/create", "录入成功");
+                }
+            },
+            blog(path, message) {
+                if (this.title === null || this.title === "") {
+                    this.setMessage("标题不能为空", "common-error");
+                    return;
+                }
+                if (this.typeId === null) {
+                    this.setMessage("分类不能为空", "common-error");
+                    return;
+                }
+                if (this.flag === null || this.flag === "") {
+                    this.setMessage("标签不能为空", "common-error");
+                    return;
+                }
+                if (this.firstPicture === null) {
+                    this.setMessage("首图不能为空", "common-error");
+                    return;
+                }
+                if (this.description === null || this.description === "") {
+                    this.setMessage("描述不能为空", "common-error");
+                    return;
+                }
+                if (this.content === null || this.content === "") {
+                    this.setMessage("内容不能为空", "common-error");
+                    return;
+                }
+
+                inori.http.post(path, {
+                    "id": this.id,
+                    "title": this.title,
+                    "typeId": this.typeId,
+                    "flag": this.flag,
+                    "firstPicture": this.firstPicture,
+                    "description": this.description,
+                    "content": this.content,
+                    "status": this.status
+                }).then((resp) => {
+                    let result = resp.data;
+                    if (result === 200) {
+                        inori.store.set("MESSAGE", message);
+                        inori.store.set("MESSAGE_CLASS", "common-success");
+                    } else {
+                        inori.store.set("MESSAGE", result.msg);
+                        inori.store.set("MESSAGE_CLASS", "common-success");
+                    }
+                }).catch(() => {
+                    inori.store.set("MESSAGE", "服务器异常");
+                    inori.store.set("MESSAGE_CLASS", "common-error");
+                });
+
+                window.location.href = "blog.html";
+            },
+            setMessage(message, messageClass) {
+                this.message = message;
+                let blog_common = $('#blog-common');
+                blog_common.removeClass();
+                blog_common.addClass(messageClass);
+                showTips();
+            }
+        }
+    }).mount("#system-main-container");
+
+</script>
+
+</body>
+</html>

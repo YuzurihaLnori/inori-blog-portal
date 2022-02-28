@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Inoriの照片墙管理页</title>
+    <link href="../image/gc.jpg" rel="shortcut icon" type="image/x-ico">
+    <link rel="stylesheet" href="../lib/element-plus/index.css">
+    <link rel="stylesheet" href="../css/blog.css">
+    <link rel="stylesheet" href="../css/system.css">
+    <link rel="stylesheet" href="../lib/bootstrap/bootstrap-icons.css">
+    <link rel="stylesheet" href="../lib/font-awesome/css/font-awesome.min.css">
+    <script type="text/javascript" src="../lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../lib/vue/vue.js"></script>
+    <script type="text/javascript" src="../lib/axios/axios.min.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+</head>
+<body>
+
+<section id="system-main-container">
+
+    <nav id="nav" class="system-gird-header">
+        <div class="site-top system-site-top">
+            <div class="system-site-branding">管理后台</div>
+            <div class="lower-cantiner m-mobile-hide">
+                <div class="lower">
+                    <ul>
+                        <li>
+                            <a href="blog.html" class="m-margin-left-small">
+                                <i class="bi-house-fill"></i><span class="fa">博客管理</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="type.html" class="m-margin-left-small">
+                                <i class="bi-front"></i><span class="fa">分类管理</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="picture.html" class="m-margin-left-small">
+                                <i class="bi-images"></i><span class="fa">照片墙管理</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="user-info">
+                <div class="user-avatar">
+                    <img src="../image/gc.jpg" alt/>
+                    <span class="user-info-span">Inori</span>
+                    <span class="logout"></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-container">
+        <div class="blog-add" style="margin-top: 140px;">
+            <button @click="saveButton"><i class="el-icon-plus" style="margin-right: 3px"></i><span>新增</span></button>
+        </div>
+
+        <div class="blog-table-title">
+            <table class="pure-table">
+                <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>缩略图</th>
+                    <th>照片标题</th>
+                    <th>照片地点</th>
+                    <th>更新时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(item, index) of 10" :key="item" :class="getClass(index)">
+                    <td><span v-if="items[index] != null">{{items[index].id}}</span></td>
+                    <td>
+                        <img :src="items[index].picturePath" alt="" @click="enlargeImg(items[index].picturePath)"
+                             v-if="items[index] != null">
+                    </td>
+                    <td><span v-if="items[index] != null">{{items[index].title}}</span></td>
+                    <td><span v-if="items[index] != null">{{items[index].address}}</span></td>
+                    <td><span v-if="items[index] != null">{{items[index].updateTime}}</span></td>
+                    <td>
+                        <button v-if="items[index] != null" class="blog-update" @click="updatePicture(items[index])">
+                            编辑
+                        </button>
+                        <button v-if="items[index] != null" class="blog-delete" @click="deletePicture(items[index])">
+                            删除
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="blog-table-footer">
+            <div class="blog-pagination">
+                <span style="margin-right: 10px">共 {{total}} 条</span>
+                <button v-if="pageNo != 1" @click="newer">
+                    <i class="el-icon-arrow-left"></i>
+                </button>
+                <a class="page-numbers" v-if="pageNo != 1" @click="current(1)">1</a>
+                <span class="page-numbers dots" v-if="(pageNo - 2) > 2">…</span>
+                <a class="page-numbers" v-if="(pageNo - 2) > 1" @click="current(pageNo - 2)">{{pageNo - 2}}</a>
+                <a class="page-numbers" v-if="(pageNo - 1) > 1" @click="current(pageNo - 1)">{{pageNo - 1}}</a>
+                <span class="current">{{pageNo}}</span>
+                <a class="page-numbers"
+                   v-if="(pageNo + 1) < (total % pageSize == 0 ? total / pageSize : parseInt(total / pageSize) + 1)"
+                   @click="current(pageNo + 1)">{{pageNo + 1}}</a>
+                <a class="page-numbers"
+                   v-if="(pageNo + 2) < (total % pageSize == 0 ? total / pageSize : parseInt(total / pageSize) + 1)"
+                   @click="current(pageNo + 2)">{{pageNo + 2}}</a>
+                <span class="page-numbers"
+                      v-if="(pageNo + 2) < ((total % pageSize == 0 ? total / pageSize : parseInt(total / pageSize) + 1) - 1)">…</span>
+                <a class="page-numbers"
+                   v-if="(pageNo != (total % pageSize == 0 ? total / pageSize : parseInt(total / pageSize) + 1)) && total != 0"
+                   @click="current(parseInt(total / pageSize) + 1)">{{(total % pageSize == 0 ? total / pageSize :
+                    parseInt(total / pageSize) +
+                    1)}}</a>
+                <button v-if="(pageNo != (total % pageSize == 0 ? total / pageSize : parseInt(total / pageSize) + 1)) && total != 0"
+                        @click="older">
+                    <i class="el-icon-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <div style="margin-top: 100px;height: 1px;"></div>
+
+    </div>
+
+    <div class="type-save">
+        <div class="type-div">
+            <div class="type-header">
+                <span>{{tip}}</span>
+                <i class="el-dialog__close el-icon el-icon-close" @click="cancel"></i>
+            </div>
+            <div class="type-body">
+                <div>
+                    <label for="title">照片标题：</label>
+                    <input id="title" v-model="title" name="title" type="text" placeholder="请输入标题">
+                </div>
+                <div>
+                    <label for="address">照片地点：</label>
+                    <input id="address" v-model="address" name="address" type="text" placeholder="请输入地点">
+                </div>
+                <div>
+                    <label for="description">照片描述：</label>
+                    <input id="description" v-model="description" name="description" type="text" placeholder="请输入描述">
+                </div>
+                <div>
+                    <label for="link">上传照片：</label>
+                    <div class="picture-uploader">
+                        <div v-if="picturePath">
+                            <img :src="picturePath" class="picture" alt="">
+                            <span class="image-span">
+                                <i class="el-icon-delete picture-delete-icon" @click="handleRemove"></i>
+                            </span>
+                        </div>
+                        <div v-else>
+                            <i class="el-icon-plus picture-uploader-icon" @click="start"></i>
+                            <input id="link" type="file" multiple accept="image/*" style="display: none"
+                                   @change="referenceUpload($event)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="type-footer">
+                <button class="cancel" @click="cancel"><span>取消</span></button>
+                <button class="determine" @click="determine"><span>确定</span></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="picture-show" class="picture-show">
+        <div id="picture-img-show" class="picture-img-show">
+            <img id="picture-img" src="" alt=""/>
+        </div>
+    </div>
+
+    <div class="common-delete-div">
+        <div class="delete-div">
+            <div class="delete-header">
+                <span class="delete-title">提示</span>
+                <i class="el-dialog__close el-icon el-icon-close" @click="deleteCancel"></i>
+            </div>
+            <div class="delete-body">
+                <div>
+                    <i class="el-message-box__status el-icon-warning"></i>
+                    <p class="delete-p">是否确认删除该博客？</p>
+                </div>
+            </div>
+            <div class="delete-footer">
+                <button class="cancel" @click="deleteCancel"><span>取消</span></button>
+                <button class="determine" @click="deleteDetermine"><span>确定</span></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="tip">
+        <p id="blog-common" class="common-success">{{message}}</p>
+    </div>
+
+</section>
+
+<script type="text/javascript" src="../js/system.js"></script>
+<script type="text/javascript">
+
+    Vue.createApp({
+        data() {
+            return {
+                pageNo: 1,
+                pageSize: 10,
+                total: 0,
+                items: [],
+                id: null,
+                picture: null,
+                picturePath: "",
+                title: "",
+                address: "",
+                description: "",
+                tip: "",
+                message: ""
+            }
+        },
+        created: function () {
+            let inori_token = inori.cookie.get("INORI_TOKEN");
+            if (inori_token === null || inori_token === "" || inori_token === "undefined") {
+                window.location.href = "login.html";
+            } else {
+                this.item();
+            }
+        },
+        methods: {
+            item() {
+                inori.http.post("/system/picture/list", {
+                    "pageNo": this.pageNo,
+                    "pageSize": this.pageSize
+                }).then((resp) => {
+                    let result = resp.data;
+                    if (result.code === 403) {
+                        window.location.href = "login.html";
+                    }
+                    this.total = result.data.total;
+                    this.items = result.data.records;
+                    if (this.items.length < 10) {
+                        let index = 10 - this.items.length;
+                        for (let i = 0; i < index; i++) {
+                            this.items.push(null);
+                        }
+                    }
+                }).catch(() => {
+                    this.setMessage("服务器异常", "common-error");
+                });
+            },
+            saveButton() {
+                this.tip = "录入照片";
+                $('.type-save').css("display", "block");
+            },
+            handleRemove() {
+                this.picturePath = "";
+            },
+            start() {
+                $("#link").click();
+            },
+            referenceUpload(event) {
+                let formData = new FormData();
+                formData.append("file", event.target.files[0]);
+                formData.append("typeCode", "img");
+
+                inori.http.post("/tool/file/upload", formData, {
+                    headers: {"Content-Type": "multipart/form-data"}
+                }).then((resp) => {
+                    let result = resp.data;
+                    if (result.code === 200) {
+                        this.picture = result.data.resId;
+                        this.picturePath = result.data.resUrl;
+                        this.setMessage("上传成功", "common-success");
+                    } else {
+                        this.setMessage(result.data.msg, "common-error");
+                    }
+                }).catch(() => {
+                    this.setMessage("服务器异常", "common-error");
+                });
+            },
+            updatePicture(item) {
+                this.tip = "编辑照片";
+                $('.type-save').css("display", "block");
+                this.id = item.id;
+                this.picture = item.picture;
+                this.picturePath = item.picturePath;
+                this.title = item.title;
+                this.address = item.address;
+                this.description = item.description;
+            },
+            cancel() {
+                $('.type-save').css("display", "none");
+                this.id = null;
+                this.picture = null;
+                this.title = "";
+                this.address = "";
+                this.description = "";
+            },
+            determine() {
+                $('.type-save').css("display", "none");
+                if (this.id !== null) {
+                    this.pushPicture("/system/picture/update", "编辑成功");
+                } else {
+                    this.pushPicture("/system/picture/create", "录入成功");
+                }
+            },
+            pushPicture(path, message) {
+                inori.http.post(path, {
+                    "id": this.id,
+                    "picture": this.picture,
+                    "title": this.title,
+                    "address": this.address,
+                    "description": this.description
+                }).then(() => {
+                    this.setMessage(message, "common-success");
+                    this.item();
+                    this.id = null;
+                    this.picture = null;
+                    this.picturePath = "";
+                    this.title = "";
+                    this.address = "";
+                    this.description = "";
+                }).catch(() => {
+                    this.setMessage("服务器异常", "common-success");
+                });
+            },
+            deletePicture(item) {
+                $('.common-delete-div').css("display", "block");
+                this.id = item.id;
+            },
+            deleteCancel() {
+                $('.common-delete-div').css("display", "none");
+            },
+            deleteDetermine() {
+                $('.common-delete-div').css("display", "none");
+                inori.http.post("/system/picture/delete", {
+                    "id": this.id
+                }).then(() => {
+                    this.setMessage("删除成功", "common-success");
+                    this.item();
+                }).catch(() => {
+                    this.setMessage("服务器异常", "common-error");
+                });
+            },
+            setMessage(message, messageClass) {
+                this.message = message;
+                let blog_common = $("#blog-common");
+                blog_common.removeClass();
+                blog_common.addClass(messageClass);
+                showTips();
+            },
+            enlargeImg(src) {
+                $("#picture-img").attr("src", src);
+                let picture_show = $(".picture-show");
+                picture_show.fadeIn("fast");
+                picture_show.click(function (event) {
+                    let e = event || window.event;
+                    let elem = e.target || e.srcElement;
+                    if (elem.id === "picture-show") {
+                        $(this).fadeOut("fast");
+                    }
+                });
+            },
+            current(pageNo) {
+                this.pageNo = pageNo;
+
+                this.item();
+            },
+            newer() {
+                this.pageNo--;
+
+                this.item();
+            },
+            older() {
+                this.pageNo++;
+
+                this.item();
+            },
+            getClass(index) {
+                if (index % 2 !== 0) {
+                    return "pure-table-odd";
+                }
+            },
+        }
+    }).mount("#system-main-container");
+
+</script>
+
+</body>
+</html>

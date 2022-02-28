@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="header" level="application" />
+    <orderEntry type="library" name="footer" level="application" />
+    <orderEntry type="library" name="index" level="application" />
+    <orderEntry type="library" name="mobile-nav" level="application" />
+    <orderEntry type="library" name="item" level="application" />
+    <orderEntry type="library" name="common" level="application" />
+    <orderEntry type="library" name="massage" level="application" />
+    <orderEntry type="library" name="picture" level="application" />
+    <orderEntry type="library" name="search" level="application" />
+    <orderEntry type="library" name="type" level="application" />
+    <orderEntry type="library" name="archives" level="application" />
+    <orderEntry type="library" name="about" level="application" />
+  </component>
+</module>

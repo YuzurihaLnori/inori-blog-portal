@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Inoriの回忆</title>
+    <link href="image/gc.jpg" rel="shortcut icon" type="image/x-ico">
+    <link rel="stylesheet" href="lib/element-plus/index.css">
+    <link rel="stylesheet" href="lib/bootstrap/bootstrap-icons.css">
+    <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/blog.css">
+    <link rel="stylesheet" href="lib/video/video-js.min.css">
+    <link rel="stylesheet" href="lib/l2dwidget/L2Dwidget.css">
+    <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/vue/vue.js"></script>
+    <script type="text/javascript" src="lib/axios/axios.min.js"></script>
+    <script type="text/javascript" src="https://lnori-blog.oss-cn-hangzhou.aliyuncs.com/lib/js/common.js"></script>
+</head>
+<body>
+
+<section id="main-container">
+    <!-- 导航 -->
+    <nav id="nav" class="gird-header" style="display: none">
+        <inori-header></inori-header>
+    </nav>
+
+    <!-- 顶部图片 -->
+    <div id="center" class="m-bg-class_outer">
+        <div id="header-container" class="m-bg-class_cover">
+            <div id="header-div">
+                <div class="m-margin-top-maxx">
+                    <img class="" src="image/gc.jpg" style="width: 140px;height: 140px;" alt="">
+                </div>
+
+                <div class="header-info">
+                    <h3>欢迎来到我的回忆~</h3>
+                    <div class="top-social">
+                        <li id="bg-pre">
+                            <img class="flipx"
+                                 src="https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/next-b.svg" alt=""/>
+                        </li>
+                        <li>
+                            <a href="#" title="weixin">
+                                <img src="https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/sns/wechat.png"
+                                     alt="weixin"/>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img src="https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/sns/qq.png"
+                                     alt="qq"/>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" title="githup">
+                                <img src="https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/sns/github.png"
+                                     alt="githup"/>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" title="email">
+                                <img src="https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/sns/email.svg"
+                                     alt="E-mail"/>
+                            </a>
+                        </li>
+                        <li id="bg-next">
+                            <img src="https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/next-b.svg" alt=""/>
+                        </li>
+                    </div>
+                </div>
+
+                <h5 class="m-font-size-text-init-title m-margin-top-large">“樱陨满天心殇集”</h5>
+                <h5 class="m-font-size-text-init-title">“樱落相随心思祈”</h5>
+                <h5 class="m-font-size-text-init-title">“我欲带王冠”</h5>
+                <h5 class="m-font-size-text-init-title">“承受其罪”</h5>
+            </div>
+        </div>
+
+        <div id="video-container">
+            <video id="bg_video" style="width: 100%;height: 100%;object-fit: cover;display: none;" preload>
+                <source id="source" src="image/Sakurasou.mp4" type="video/mp4">
+            </video>
+            <div id="video-btn" class="video-play faa-float animated"></div>
+            <div id="video-pause" class="video-pause faa-float animated"></div>
+            <div id="video-stu" class="video-stu">正在载入视频 ...</div>
+        </div>
+
+        <div id="wayPoint" class="header-top-down faa-float animated">
+            <a href="#" onclick="header_top_down()"><i class="icon-chevron-down"></i></a>
+        </div>
+
+        <div>
+            <div id="banner_wave_1"></div>
+            <div id="banner_wave_2"></div>
+        </div>
+    </div>
+
+    <!-- 中间内容 -->
+    <div id="page">
+        <!-- 博客内容 -->
+        <div class="site-content">
+            <div class="main-area">
+                <!-- 推荐 -->
+                <div id="recommend" class="recommend">
+                    <div class="ui m-container-small m-opacity">
+                        <div style="text-align: center">
+                            <span>最新推荐</span>
+                            <div class="page-link"></div>
+                        </div>
+                    </div>
+                    <div class="m-opacity">
+                        <div class="top-feature-v2" v-for="item of recommends">
+                            <div class="the-feature square from_left_and_right m-margin-right-small">
+                                <a @click="recommendBlog(item.id)">
+                                    <div class="img">
+                                        <img class="lazyload" src="image/stripe-loader.svg"
+                                             :data-src="item.firstPicturePath" alt="">
+                                    </div>
+
+                                    <div class="info">
+                                        <h3>{{item.title}}</h3>
+                                        <p>{{item.description}}</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="content-title" class="m-opacity site-main " style="padding-top: 30px">
+                    <div style="text-align: center">
+                        <span style="font-family: 'Noto Serif SC', serif;">最新文章</span>
+                        <div class="page-link"></div>
+                    </div>
+                </div>
+
+                <!-- 博文列表 -->
+                <div id="content" class="m-padded-tb-large content-area container">
+                    <div class="post-list-thumb" v-for="(item, index) of items" :key="item+index"
+                         style="will-change: auto;">
+                        <!-- 博文图片 -->
+                        <div class="post-thumb" :class="getThumbClass(index + 1)">
+                            <a @click="blog(item.id)">
+                                <img class="lazyload" src="image/stripe-loader.svg" :data-src="item.firstPicturePath"
+                                     alt="">
+                            </a>
+                        </div>
+                        <!-- 博文信息 -->
+                        <div class="post-content-wrap" :class="getThumbClass(index)">
+                            <div class="post-date">
+                                <i class="calendar icon"></i>
+                                <span>发布于{{item.createTime}}</span>
+                            </div>
+                            <a class="post-title-a" @click="blog(item.id)">
+                                <h3 class="post-title">{{item.title}}</h3>
+                            </a>
+                            <div class="post-content">
+                                <i class="icon-eye-open"></i><span style="margin-right: 15px"> {{item.views}} 热度</span>
+                                <i class="bi-chat-dots"></i>
+                                <span style="margin-right: 15px"> {{item.commentTotal}} 条评论</span>
+                                <i class="bi-front"></i><span> {{item.typeName}}</span>
+                            </div>
+                            <div class="float-content">
+                                <p class="m-text m-margin-top-max">{{item.description}}</p>
+                            </div>
+                            <div class="post-bottom">
+                                <a href="#" class="button-normal" :class="getButtonClass(index)" @click="blog(item.id)">
+                                    <i class="big bi-three-dots"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="pagination" v-if="items.length != total" @click="getItems">
+                        <a>Previous</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 底部footer -->
+    <footer id="footer" class="site-footer m-opacity" role="contentinfo">
+        <inori-footer></inori-footer>
+    </footer>
+
+    <!-- 消息提示 -->
+    <div class="butterBar butterBar-center">
+        <p class="butterBar-error">{{message}}</p>
+    </div>
+
+</section>
+
+<div id="mobile-nav">
+    <div class="mobile-avatar">
+        <img src="image/gc.jpg" alt="">
+    </div>
+    <p class="mobile-p">Yuzuriha Inori</p>
+    <div class="mobile-search">
+        <input class="mobile-search-input" v-model="keywords" type="search" placeholder="Search..."
+               @keydown="search($event)">
+    </div>
+    <ul>
+        <li>
+            <a href="http://ai-inori.top" class="m-margin-left-small">
+                <i class="bi-house-fill"></i><span class="fa">首页</span>
+            </a>
+        </li>
+        <li>
+            <a class="m-margin-left-small fa-type" @click="searchTypes">
+                <i class="bi-front"></i><span class="fa">分类</span>
+            </a>
+            <ul class="sub-menu">
+                <li v-for="item of types" :key="item">
+                    <a class="m-margin-left-small" @click="searchType(item)">
+                        <span class="fa-code">{{item.name}}</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="archives.html" class="m-margin-left-small">
+                <i class="bi-archive-fill"></i><span class="fa">归档</span>
+            </a>
+        </li>
+        <li>
+            <a href="message.html" class="m-margin-left-small">
+                <i class="bi-pencil-square"></i><span class="fa">留言板</span>
+            </a>
+        </li>
+        <!--<li>
+            <a href="#" class="m-margin-left-small">
+                <i class="icon-link"></i><span class="fa">友人帐</span>
+            </a>
+        </li>-->
+        <li>
+            <a href="picture.html" class="m-margin-left-small">
+                <i class="bi-images"></i><span class="fa">照片墙</span>
+            </a>
+        </li>
+        <li>
+            <a href="about.html" class="m-margin-left-small">
+                <i class="icon-leaf"></i><span class="fa">关于我</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<!-- 置顶图标 -->
+<div id="back-to-top" class="back-to-top cd-top faa-float cd-is-visible" style="display: none"></div>
+<button id="mobile-top" style="display: none"><i class="el-icon-arrow-up"></i></button>
+
+<!-- 看板娘 -->
+<div class="waifu">
+    <div class="waifu-tips"></div>
+    <canvas id="live2d" width="250" height="450" class="live2d"></canvas>
+</div>
+
+<script type="text/javascript" src="lib/l2dwidget/live2d.js"></script>
+<script type="text/javascript" src="lib/l2dwidget/L2Dwidget.js"></script>
+<script type="text/javascript" src="lib/l2dwidget/waifu-tips.js"></script>
+<script type="text/javascript" src="lib/element-plus/index.full.js"></script>
+<script type="text/javascript" src="lib/waypoint/jquery.waypoints.min.js"></script>
+<script type="text/javascript" src="lib/video/video.min.js"></script>
+<script type="text/javascript" src="lib/lazyload/lazyload.min.js"></script>
+<script type="text/javascript" src="https://lnori-blog.oss-cn-hangzhou.aliyuncs.com/lib/js/header.js"></script>
+<script type="text/javascript" src="https://lnori-blog.oss-cn-hangzhou.aliyuncs.com/lib/js/footer.js"></script>
+<script type="text/javascript" src="https://lnori-blog.oss-cn-hangzhou.aliyuncs.com/lib/js/mobile-nav.js"></script>
+<script type="text/javascript" src="https://lnori-blog.oss-cn-hangzhou.aliyuncs.com/lib/js/index.js"></script>
+<script type="text/javascript" src="https://lnori-blog.oss-cn-hangzhou.aliyuncs.com/lib/js/item.js"></script>
+
+<script type="text/javascript">
+
+    //看板娘
+    loadlive2d("live2d", "lib/l2dwidget/model/mashiro/seifuku.model.json");
+
+    function show_runtime() {
+        window.setTimeout("show_runtime()", 1000);
+        const X = new Date("01/01/2022 00:00:00");
+        const Y = new Date();
+        const T = (Y.getTime() - X.getTime());
+        const M = 24 * 60 * 60 * 1000;
+        const a = T / M;
+        const A = Math.floor(a);
+        const b = (a - A) * 24;
+        const B = Math.floor(b);
+        const c = (b - B) * 60;
+        const C = Math.floor((b - B) * 60);
+        const D = Math.floor((c - C) * 60);
+        document.getElementById('runtime_span').innerHTML = A + "天" + B + "小时" + C + "分" + D + "秒"
+    }
+
+    show_runtime();
+
+</script>
+
+</body>
+</html>

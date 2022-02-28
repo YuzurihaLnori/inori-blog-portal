@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Inoriの读写文件的一些骚操作</title>
+    <link href="../image/gc.jpg" rel="shortcut icon" type="image/x-ico">
+    <link rel="stylesheet" href="../lib/element-plus/index.css">
+    <link rel="stylesheet" href="../lib/bootstrap/bootstrap-icons.css">
+    <link rel="stylesheet" href="../lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../lib/tocbot/tocbot.css">
+    <link rel="stylesheet" href="../css/blog.css">
+    <link rel="stylesheet" href="../lib/l2dwidget/L2Dwidget.css">
+    <link rel="stylesheet" href="../css/typo.css">
+    <link rel="stylesheet" href="../lib/prism/prism.css">
+    <script type="text/javascript" src="../lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../lib/vue/vue.js"></script>
+    <script type="text/javascript" src="../lib/axios/axios.min.js"></script>
+    <script type="text/javascript" src="https://lnori-blog.oss-cn-hangzhou.aliyuncs.com/lib/js/common.js"></script>
+</head>
+<body>
+
+<section id="main-container">
+    <!-- 导航 -->
+    <nav id="nav" class="gird-header">
+        <div class="scrollbar" id="bar" style="width: 10%;"></div>
+        <div class="site-top">
+            <div class="site-branding"><a>Inoriの回忆</a></div>
+            <div class="lower-cantiner m-mobile-hide">
+                <div class="lower">
+                    <ul>
+                        <li>
+                            <a href="http://ai-inori.top" class="m-margin-left-small">
+                                <i class="bi-house-fill"></i><span class="fa">首页</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../type.html" class="m-margin-left-small fa-type" @click="searchTypes">
+                                <i class="bi-front"></i><span class="fa">分类</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li v-for="item of types" :key="item">
+                                    <a class="m-margin-left-small" @click="searchType(item)">
+                                        <span class="fa-code">{{item.name}}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="../archives.html" class="m-margin-left-small">
+                                <i class="bi-archive-fill"></i><span class="fa">归档</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../message.html" class="m-margin-left-small">
+                                <i class="bi-pencil-square"></i><span class="fa">留言板</span>
+                            </a>
+                        </li>
+                        <!--<li>
+                            <a href="#" class="m-margin-left-small">
+                                <i class="icon-link"></i><span class="fa">友人帐</span>
+                            </a>
+                        </li>-->
+                        <li>
+                            <a href="../picture.html" class="m-margin-left-small">
+                                <i class="bi-images"></i><span class="fa">照片墙</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../about.html" class="m-margin-left-small">
+                                <i class="icon-leaf"></i><span class="fa">关于我</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="search-box m-mobile-hide">
+                <form action="#" name="search">
+                    <div>
+                        <label>
+                            <input class="search" type="text" name="search" placeholder="Search..." v-model="keywords"
+                                   @keydown="search($event)">
+                        </label>
+                        <i @click="search" class="bi-search" style="margin-left: 10px"></i>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="mobile-menu" @click="mobileOpen"><i id="mobile-icon" class="icon-reorder"></i></div>
+    </nav>
+
+    <!-- 顶部图片 -->
+    <div class="blog-center">
+        <div class="common-attachment-img lazyload" style="background-image: url(../image/stripe-loader.svg);" data-src="https://lnori-blog.oss-cn-hangzhou.aliyuncs.com/system-img/1625643410765_75317471_p0_master1200.jpg"></div>
+        <header class="blog-header">
+            <h1 class="blog-title fa">读写文件的一些骚操作</h1>
+            <p class="blog-desc">
+                <a><img src="http://lnori-blog.oss-cn-hangzhou.aliyuncs.com/system-img/1625887275573_gc.jpg" alt=""></a>
+                <span>Inori</span>
+                <span style="margin: 0 5px">·</span>
+                <span>2021-07-07</span>
+                <span style="margin: 0 5px">·</span>
+                <span>{{views}}</span> 次阅读
+            </p>
+        </header>
+    </div>
+
+    <!-- 中间内容 -->
+    <div id="page">
+        <div class="site-content">
+            <div class="main-area">
+                <!-- 博文列表 -->
+                <div id="content" class="m-padded-tb-big content-area container">
+                    <div id="blog-content" class="blog-content">
+                        <div class="js-toc-content"><h2>序言</h2>
+<p>当需要对文件进行操作时，使用IO流是不能避免的操作；比如业务中需要存储一些请求的响应结果中的一些内容。当所需处理的文件过大时，如果频繁的关闭文件流，会造成很大的开销，何时关闭？往往会造成比较大的困扰。那么如何才能比较优雅的处理文件呢？</p>
+<h2>使用案例</h2>
+<h3>情景</h3>
+<p>存储数据时，行与行之间使用回车符隔开；一行的数据字段之间使用<code>Tab</code>键隔开</p>
+<h3>解决方案一：</h3>
+<p>使用apache提供的工具类IOUtil可以方便快捷的处理这个问题，这个工具类封装了很多方法；
+官方文档请参考：<a href="http://commons.apache.org/proper/commons-io/javadocs/api-release/org/apache/commons/io/IOUtils.html" target="_blank">官方Api</a></p>
+<ul>
+<li>引入apache工具类IOUtil的依赖包</li>
+</ul>
+<pre><code class="language-xml">    &lt;dependencies&gt;
+        &lt;!-- apache提供的一个IO工具类 --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;commons-io&lt;/groupId&gt;
+            &lt;artifactId&gt;commons-io&lt;/artifactId&gt;
+            &lt;version&gt;2.4&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+    &lt;repositories&gt;
+        &lt;repository&gt;
+            &lt;id&gt;alimaven&lt;/id&gt;
+            &lt;name&gt;aliyun maven&lt;/name&gt;
+            &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;
+            &lt;releases&gt;
+                &lt;enabled&gt;true&lt;/enabled&gt;
+            &lt;/releases&gt;
+            &lt;snapshots&gt;
+                &lt;enabled&gt;false&lt;/enabled&gt;
+            &lt;/snapshots&gt;
+        &lt;/repository&gt;
+    &lt;/repositories&gt;
+</code></pre>
+<ul>
+<li>主要代码如下：</li>
+</ul>
+<pre><code class="language-java">public static void main(String[] args) {
+    List&lt;String&gt; list = new ArrayList();
+    list.add(&quot;hello&quot;);
+    list.add(&quot;third&quot;);
+    list.add(&quot;method&quot;);
+    list.add(&quot;io&quot;);
+    list.add(&quot;util&quot;);
+    OutputStream os = null;
+    File filePath = new File(&quot;d:\\&quot; + DateUtil.getCurrentDate(&quot;yyyyMMdd&quot;) + &quot;.txt&quot;);
+
+    try {
+        os = new FileOutputStream(filePath, true);
+        //一行中的字段用tab隔开
+        IOUtils.writeLines(list,&quot;\t&quot;,os);
+        //行与行之间用回车隔开
+        IOUtils.write(&quot;\n&quot;, os);
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+</code></pre>
+<h3>解决方案二：</h3>
+<ul>
+<li>主要代码如下：</li>
+</ul>
+<pre><code class="language-java">public static void main(String[] args) {
+    File filePath = new File(&quot;d:\\&quot; + DateUtil.getCurrentDate(&quot;yyyyMMdd&quot;) + &quot;.txt&quot;);
+
+    //将数据保存到StringBuffer中后再存储到文件中
+    List&lt;String&gt; list = new ArrayList();
+    list.add(&quot;hello&quot;);
+    list.add(&quot;second&quot;);
+    list.add(&quot;method&quot;);
+    list.add(&quot;io&quot;);
+    list.add(&quot;util&quot;);
+    //因为此处不涉及线程安全问题，所以用了StringBuilder
+    StringBuilder sb = new StringBuilder();
+    Iterator&lt;String&gt; iterator = list.iterator();
+    while (iterator.hasNext()) {
+        String item = iterator.next();
+        sb.append(item).append(&quot;\t&quot;);
+    }
+    String newTxt = sb.deleteCharAt(sb.length()-1).append(&quot;\n&quot;).toString();
+
+    BufferedWriter bw = null;
+    try {
+        //true表示文件写入方式为追加；flase表示是覆盖
+        bw = new BufferedWriter(new FileWriter(filePath, true));
+        bw.write(newTxt);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }finally {
+        if (null != bw) {
+            try {
+                bw.flush();
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+</code></pre>
+<h3>解决方案三：</h3>
+<ul>
+<li>主要代码如下：</li>
+</ul>
+<pre><code class="language-java">public class IOFirst {
+    /**
+     * description: 最复杂，但也是比较考验基本功的写法
+     * author: Lnori
+     * date: 2019/11/8 18:41
+    */
+    public static void main(String[] args)
+    {
+        File log=new File(&quot;d:\\&quot;+DateUtil.getCurrentDate(&quot;yyyyMMdd&quot;) +&quot;.txt&quot;);
+        List&lt;String&gt; list = new ArrayList();
+        list.add(&quot;hello&quot;);
+        list.add(&quot;first&quot;);
+        list.add(&quot;method&quot;);
+        list.add(&quot;io&quot;);
+        list.add(&quot;util&quot;);
+        //因为此处不涉及线程安全问题，所以用了StringBuilder
+        StringBuilder sb = new StringBuilder();
+        Iterator&lt;String&gt; iterator = list.iterator();
+        while (iterator.hasNext()) {
+            String item = iterator.next();
+            sb.append(item).append(&quot;\t&quot;);
+        }
+        String newLog = sb.deleteCharAt(sb.length()-1).toString();
+        //调用appendLog方法执行文件写入操作
+        appendLog(log,newLog);
+    }
+
+    /**
+     * description: 此种方式是自己写的类，想怎么操作按自己的意思来
+     * author: mmzsit
+     * date: 2018/12/27 17:42
+    */
+    public static void appendLog(File filePath,String newTxt)
+    {
+        Scanner sc=null;
+        PrintWriter pw=null;
+        try{
+            isExists(filePath);
+            sc=new Scanner(filePath);
+            StringBuilder sb=new StringBuilder();
+            //先读出旧文件内容,并暂存sb中;
+            while(sc.hasNextLine())
+            {
+                sb.append(sc.nextLine());
+                //换行符作为间隔,扫描器读不出来,因此要自己添加.
+                sb.append(&quot;\t\n&quot;);
+            }
+            if (0 != sb.length()) {
+                //解决每次多余的空行
+                sb.deleteCharAt(sb.length()-1);
+            }
+            sc.close();
+
+            pw=new PrintWriter(new  FileWriter(filePath),true);
+            //A、写入旧文件内容.
+            pw.println(sb.toString());
+            //B、写入新文件内容
+            pw.println(newTxt);
+            /*
+             * 如果先写入A,最近写入在文件最后.
+             * 如是先写入B,最近写入在文件最前.
+             */
+            pw.close();
+        }
+        catch(IOException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * description: 保证文件夹的存在
+     * author: mmzsit
+     * date: 2018/12/27 17:42
+    */
+    public static void isExists(File filePath){
+        //如果文件不存在,则新建.
+        if(!filePath.exists())
+        {
+            File parentDir=new File(filePath.getParent());
+            //如果所在目录不存在,则新建.
+            if(!parentDir.exists()) {
+                parentDir.mkdirs();
+            }
+            try {
+                filePath.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+</code></pre>
+</div>
+                        <div class="blog-footer">
+                            <div class="blog-lincenses">
+                                <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">
+                                    <i class="bi bi-badge-cc" aria-hidden="true"></i>
+                                    知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议
+                                </a>
+                            </div>
+                        </div>
+                        <div class="post-squares">
+                            <div id="previous" class="squares half previous" v-if="previous != null">
+                                <a @click="blog(previous.id)">
+                                    <div class="background lazyload"
+                                         style="background-image: url(../image/stripe-loader.svg);"
+                                         :data-src="previous.firstPicturePath">
+                                    </div>
+                                    <span class="label">Previous Post</span>
+                                    <h3 class="info">{{previous.title}}</h3>
+                                </a>
+                            </div>
+                            <div id="next" class="squares half next" v-if="next != null">
+                                <a @click="blog(next.id)">
+                                    <div class="background lazyload"
+                                         style="background-image: url(../image/stripe-loader.svg);"
+                                         :data-src="next.firstPicturePath">
+                                    </div>
+                                    <span class="label">Next Post</span>
+                                    <h3 class="info">{{next.title}}</h3>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="toc-container">
+                        <div class="toc">
+                            <ol class="toc-list">
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div id="blog-comment" style="padding-top: 50px">
+                        <h3 class="comment-list-title">Comment | <span>{{totalNumber}} 条评论 </span></h3>
+
+                        <ul class="comment_wrap">
+                            <li class="comment" v-for="item of items" :key="item">
+                                <div class="contents">
+                                    <div class="contents-main">
+                                        <div class="profile">
+                                            <a>
+                                                <img class="lazyload" src="../image/spinner-preloader.svg"
+                                                     :data-src="item.avatar" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="contents-text">
+                                            <div class="contents-span">
+                                                <h4>
+                                                    <a>
+                                                        <span class="bb-contents" v-if="item.isBlogger == 1">博主</span>
+                                                        {{item.nickName}}
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <a class="contents-reply-link" @click="delete(item.id)" v-if="flag">删除</a>
+                                            <a class="contents-reply-link" @click="reply(item.id)">回复</a>
+                                            <div class="contents-info">
+                                                <time>发布于 {{item.createTime}}</time>
+                                            </div>
+                                        </div>
+                                        <div class="contents-body">
+                                            <p>{{item.content}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <ul class="comment_wrap children">
+                                    <li class="comment" v-for="itemReply of item.commentReplyList" :key="item">
+                                        <div class="contents">
+                                            <div class="contents-main">
+                                                <div class="profile">
+                                                    <a>
+                                                        <img class="lazyload" src="../image/spinner-preloader.svg"
+                                                             :data-src="itemReply.avatar" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="contents-text">
+                                                    <div class="contents-span">
+                                                        <h4>
+                                                            <a>
+                                                            <span class="bb-contents" v-if="itemReply.isBlogger == 1">
+                                                                博主
+                                                            </span>
+                                                                {{itemReply.nickName}}
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                    <a class="contents-reply-link" @click="deleteMessage(itemReply.id)"
+                                                       v-if="flag">
+                                                        删除
+                                                    </a>
+                                                    <a class="contents-reply-link" @click="reply(itemReply.id)">回复</a>
+                                                    <div class="contents-info">
+                                                        <time>发布于 {{itemReply.createTime}}</time>
+                                                    </div>
+                                                </div>
+                                                <div class="contents-body">
+                                                    <p>
+                                                        <a>@{{item.nickName}}</a>
+                                                        {{itemReply.content}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <nav class="comment-nav" v-if="total > 10">
+                            <a class="prev" v-if="pageNo != 1" @click="newer">« Newer</a>
+                            <a class="page-numbers" v-if="pageNo != 1" @click="current">1</a>
+                            <span class="page-numbers dots" v-if="(pageNo - 2) > 2">…</span>
+                            <a class="page-numbers" v-if="(pageNo - 2) > 1" @click="current(pageNo - 2)">{{pageNo -
+                                2}}</a>
+                            <a class="page-numbers" v-if="(pageNo - 1) > 1" @click="current(pageNo - 1)">{{pageNo -
+                                1}}</a>
+                            <span class="current">{{pageNo}}</span>
+                            <a class="page-numbers"
+                               v-if="(pageNo + 1) < (total % pageSize == 0 ? total / pageSize : parseInt(total / pageSize) + 1)"
+                               @click="current(pageNo + 1)">{{pageNo + 1}}</a>
+                            <a class="page-numbers"
+                               v-if="(pageNo + 2) < (total % pageSize == 0 ? total / pageSize : parseInt(total / pageSize) + 1)"
+                               @click="current(pageNo + 2)">{{pageNo + 2}}</a>
+                            <span class="page-numbers"
+                                  v-if="(pageNo + 2) < ((total % pageSize == 0 ? total / pageSize : parseInt(total / pageSize) + 1) - 1)">…</span>
+                            <a class="page-numbers"
+                               v-if="(pageNo != (total % pageSize == 0 ? total / pageSize : parseInt(total / pageSize) + 1)) && total != 0"
+                               @click="current">{{(total % pageSize == 0 ? total / pageSize : parseInt(total / pageSize)
+                                +
+                                1)}}</a>
+                            <a class="next"
+                               v-if="(pageNo != (total % pageSize == 0 ? total / pageSize : parseInt(total / pageSize) + 1)) && total != 0"
+                               @click="older">Older »</a>
+                        </nav>
+
+                        <div class="comment-from">
+                            <p style="font-style:italic">
+                                <a href="https://segmentfault.com/markdown" target="_blank">
+                                    <i style="color: black" class="bi bi-markdown-fill"></i>
+                                </a>
+                                Markdown Supported while
+                                <i class="bi bi-code-slash"></i>
+                                Forbidden
+                            </p>
+                            <div class="comment-textarea">
+                            <textarea v-model="content" placeholder="你是我一生只会遇见一次的惊喜 ..." name="comment" id="comment"
+                                      class="comment-body" rows="5" tabindex="4"></textarea>
+                                <label class="input-label">你是我一生只会遇见一次的惊喜 ...</label>
+                            </div>
+                            <div class="comment-info-container">
+                                <div class="comment-avatar">
+                                    <img :src="avatar" alt="">
+                                </div>
+                                <div class="popup comment-popup-avatar">
+                                    <span id="popup-text" class="popup-text">输入QQ号将自动拉取昵称和头像</span>
+                                    <input v-model="nickName" type="text" placeholder="昵称或QQ号 (必填)" name="nickName"
+                                           id="nickName" @focus="focus" @blur="blur">
+                                </div>
+                                <div class="popup comment-popup">
+                                    <input v-model="email" type="text" placeholder="邮箱（选填）">
+                                </div>
+                            </div>
+                            <input type="submit" class="comment-from-input" value="BiuBiuBiu~" @click="submit">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 底部footer -->
+    <footer class="site-footer m-opacity" role="contentinfo">
+        <div class="site-info">
+            <div>
+                <span style="font-family: \'Ubuntu\',sans-serif;color: #000;">
+                    Copyright © by Inoriの记忆
+                </span>
+                <br><br>
+                <a style="color: #666666" href="http://www.beian.miit.gov.cn" target="_blank">
+                    赣ICP备2022001186号-1
+                </a>
+            </div>
+
+            <div style="color: #666666;padding-top: 15px;font-family: \'Ubuntu\',sans-serif;"
+                 class="m-text-thin m-text-spaced">
+                我的回忆已记录：<span id="runtime_span" class="item m-text-thin"></span>
+            </div>
+        </div>
+    </footer>
+
+    <div class="comment-from-reply-y">
+        <div class="comment-from-reply">
+            <div style="padding-top: 20px;margin-left: 20px;margin-right: 20px; padding-bottom: 20px">
+                <p style="font-style:italic;color: #000;">
+                    <i class="icon-comments"></i>
+                    回复评论
+                </p>
+                <div class="comment-textarea" style="height: 150px;">
+                    <textarea v-model="contentReply" placeholder="你是我一生只会遇见一次的惊喜 ..." name="comment"
+                              class="comment-body" rows="5" tabindex="4"></textarea>
+                    <label class="input-label">你是我一生只会遇见一次的惊喜 ...</label>
+                </div>
+                <div class="comment-info-container" style="padding-top: 60px;">
+                    <div id="comment-avatar-reply" class="comment-avatar">
+                        <img :src="avatar" alt=""/>
+                    </div>
+                    <div class="popup comment-popup-avatar" style="width: 300px;margin-bottom: 20px">
+                        <span id="popup-text-reply" class="popup-text" style="width: 300px;margin-left: -150px;">
+                            输入QQ号将自动拉取昵称和头像
+                        </span>
+                        <input v-model="nickName" type="text" placeholder="昵称或QQ号 (昵称 )" name="nickNameReply"
+                               id="nickNameReply" @focus="focusReply" @blur="blurReply">
+                    </div>
+                    <div class="popup comment-popup" style="width: 300px">
+                        <input v-model="email" type="text" placeholder="邮箱">
+                    </div>
+                </div>
+                <input name="submit" type="submit" class="comment-from-input" value="BiuBiuBiu~" @click="submitReply">
+                <a class="comment_close" @click="close"><i class="bi bi-x-lg"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 消息提示 -->
+    <div class="butterBar butterBar-center">
+        <p id="butterBar-common" class="butterBar-success">{{message}}</p>
+    </div>
+
+</section>
+
+<!-- 手机导航 -->
+<div id="mobile-nav">
+    <div class="mobile-avatar">
+        <img src="../image/gc.jpg" alt="">
+    </div>
+    <p class="mobile-p">Yuzuriha Inori</p>
+    <div class="mobile-search">
+        <input class="mobile-search-input" v-model="keywords" type="search" name="s" placeholder="搜索..."
+               @keydown="search($event)">
+    </div>
+    <ul>
+        <li>
+            <a href="http://ai-inori.top" class="m-margin-left-small">
+                <i class="bi-house-fill"></i><span class="fa">首页</span>
+            </a>
+        </li>
+        <li>
+            <a href="../type.html" class="m-margin-left-small fa-type" @click="searchTypes">
+                <i class="bi-front"></i><span class="fa">分类</span>
+            </a>
+            <ul class="sub-menu">
+                <li v-for="item of types" :key="item">
+                    <a class="m-margin-left-small" @click="searchType(item)">
+                        <span class="fa-code">{{item.name}}</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="../archives.html" class="m-margin-left-small">
+                <i class="bi-archive-fill"></i><span class="fa">归档</span>
+            </a>
+        </li>
+        <li>
+            <a href="../message.html" class="m-margin-left-small">
+                <i class="bi-pencil-square"></i><span class="fa">留言板</span>
+            </a>
+        </li>
+        <!--<li>
+            <a href="#" class="m-margin-left-small">
+                <i class="icon-link"></i><span class="fa">友人帐</span>
+            </a>
+        </li>-->
+        <li>
+            <a href="../picture.html" class="m-margin-left-small">
+                <i class="bi-images"></i><span class="fa">照片墙</span>
+            </a>
+        </li>
+        <li>
+            <a href="../about.html" class="m-margin-left-small">
+                <i class="icon-leaf"></i><span class="fa">关于我</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<!-- 置顶图标 -->
+<div id="back-to-top" class="back-to-top cd-top faa-float cd-is-visible" style="display: none"></div>
+<button id="mobile-top" style="display: none"><i class="el-icon-arrow-up"></i></button>
+
+<!-- 看板娘 -->
+<div class="waifu">
+    <div class="waifu-tips"></div>
+    <canvas id="live2d" width="250" height="450" class="live2d"></canvas>
+</div>
+
+<script type="text/javascript" src="../lib/l2dwidget/L2Dwidget.js"></script>
+<script type="text/javascript" src="../lib/l2dwidget/live2d.js"></script>
+<script type="text/javascript" src="../lib/l2dwidget/waifu-tips.js"></script>
+<script type="text/javascript" src="../lib/element-plus/index.full.js"></script>
+<script type="text/javascript" src="../lib/waypoint/jquery.waypoints.min.js"></script>
+<script type="text/javascript" src="../lib/lazyload/lazyload.min.js"></script>
+<script type="text/javascript" src="../lib/prism/prism.js"></script>
+<script type="text/javascript" src="../lib/tocbot/tocbot.min.js"></script>
+<script type="text/javascript" src="https://lnori-blog.oss-cn-hangzhou.aliyuncs.com/lib/js/blog.js"></script>
+<script type="text/javascript" src="https://lnori-blog.oss-cn-hangzhou.aliyuncs.com/lib/js/item.js"></script>
+
+<script type="text/javascript">
+
+    //看板娘
+    loadlive2d("live2d", "../lib/l2dwidget/model/mashiro/seifuku.model.json");
+
+    function show_runtime() {
+        window.setTimeout("show_runtime()", 1000);
+        const X = new Date("01/01/2022 00:00:00");
+        const Y = new Date();
+        const T = (Y.getTime() - X.getTime());
+        const M = 24 * 60 * 60 * 1000;
+        const a = T / M;
+        const A = Math.floor(a);
+        const b = (a - A) * 24;
+        const B = Math.floor(b);
+        const c = (b - B) * 60;
+        const C = Math.floor((b - B) * 60);
+        const D = Math.floor((c - C) * 60);
+        document.getElementById('runtime_span').innerHTML = A + "天" + B + "小时" + C + "分" + D + "秒"
+    }
+
+    show_runtime();
+
+</script>
+
+</body>
+</html>

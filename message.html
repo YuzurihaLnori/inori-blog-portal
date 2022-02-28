@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Inoriの留言板</title>
+    <link href="image/gc.jpg" rel="shortcut icon" type="image/x-ico">
+    <link rel="stylesheet" href="lib/element-plus/index.css">
+    <link rel="stylesheet" href="lib/bootstrap/bootstrap-icons.css">
+    <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/blog.css">
+    <link rel="stylesheet" href="lib/l2dwidget/L2Dwidget.css">
+    <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/vue/vue.js"></script>
+    <script type="text/javascript" src="lib/axios/axios.min.js"></script>
+    <script type="text/javascript" src="https://lnori-blog.oss-cn-hangzhou.aliyuncs.com/lib/js/common.js"></script>
+</head>
+<body>
+
+<section id="main-container">
+    <!-- 导航 -->
+    <nav id="nav" class="gird-header">
+        <inori-header></inori-header>
+    </nav>
+
+    <!-- 顶部图片 -->
+    <div class="common-center">
+        <div class="common-attachment-img lazyload" style="background-image: url(image/stripe-loader.svg);"
+             data-src="https://lnori-blog.oss-cn-hangzhou.aliyuncs.com/system-img/illust_62112145_20200629_173423.png"></div>
+        <header class="common-header">
+            <h1 class="common-title fa">留言板</h1><br><br>
+            <span class="comment-span">虽然只是短暂的擦身，相遇与分别，尽管如此，我却仍然想珍惜这所有的一切</span>
+        </header>
+    </div>
+
+    <!-- 中间内容 -->
+    <div id="page">
+        <div class="site-content">
+            <div class="main-area">
+                <div id="content" class="m-padded-tb-message content-area container">
+                    <h3 class="comment-list-title">Messages | <span>{{totalNumber}} 条留言 </span></h3>
+
+                    <ul class="comment_wrap">
+                        <li class="comment" v-for="item of items" :key="item">
+                            <div class="contents">
+                                <div class="contents-main">
+                                    <div class="profile">
+                                        <a>
+                                            <img class="lazyload" src="image/spinner-preloader.svg"
+                                                 :data-src="item.avatar" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="contents-text">
+                                        <div class="contents-span">
+                                            <h4>
+                                                <a>
+                                                    <span class="bb-contents" v-if="item.isBlogger == 1">博主</span>
+                                                    {{item.nickName}}
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <a class="contents-reply-link" @click="deleteMessage(item.id)"
+                                           v-if="flag">删除</a>
+                                        <a class="contents-reply-link" @click="reply(item.id)">回复</a>
+                                        <div class="contents-info">
+                                            <time>发布于 {{item.createTime}}</time>
+                                        </div>
+                                    </div>
+                                    <div class="contents-body">
+                                        <p>{{item.content}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <ul class="comment_wrap children">
+                                <li class="comment" v-for="itemReply of item.messageReplyList" :key="item">
+                                    <div class="contents">
+                                        <div class="contents-main">
+                                            <div class="profile">
+                                                <a>
+                                                    <img class="lazyload" src="image/spinner-preloader.svg"
+                                                         :data-src="itemReply.avatar" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="contents-text">
+                                                <div class="contents-span">
+                                                    <h4>
+                                                        <a>
+                                                            <span class="bb-contents" v-if="itemReply.isBlogger == 1">
+                                                                博主
+                                                            </span>
+                                                            {{itemReply.nickName}}
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <a class="contents-reply-link" @click="deleteMessage(itemReply.id)"
+                                                   v-if="flag">
+                                                    删除
+                                                </a>
+                                                <a class="contents-reply-link" @click="reply(itemReply.id)">回复</a>
+                                                <div class="contents-info">
+                                                    <time>发布于 {{itemReply.createTime}}</time>
+                                                </div>
+                                            </div>
+                                            <div class="contents-body">
+                                                <p>
+                                                    <a>@{{item.nickName}}</a>
+                                                    {{itemReply.content}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <nav class="comment-nav" v-if="total > 10">
+                        <a class="prev" v-if="pageNo != 1" @click="newer">« Newer</a>
+                        <a class="page-numbers" v-if="pageNo != 1" @click="current">1</a>
+                        <span class="page-numbers dots" v-if="(pageNo - 2) > 2">…</span>
+                        <a class="page-numbers" v-if="(pageNo - 2) > 1" @click="current(pageNo - 2)">{{pageNo - 2}}</a>
+                        <a class="page-numbers" v-if="(pageNo - 1) > 1" @click="current(pageNo - 1)">{{pageNo - 1}}</a>
+                        <span class="current">{{pageNo}}</span>
+                        <a class="page-numbers"
+                           v-if="(pageNo + 1) < (total % pageSize == 0 ? total / pageSize : parseInt(total / pageSize) + 1)"
+                           @click="current(pageNo + 1)">{{pageNo + 1}}</a>
+                        <a class="page-numbers"
+                           v-if="(pageNo + 2) < (total % pageSize == 0 ? total / pageSize : parseInt(total / pageSize) + 1)"
+                           @click="current(pageNo + 2)">{{pageNo + 2}}</a>
+                        <span class="page-numbers"
+                              v-if="(pageNo + 2) < ((total % pageSize == 0 ? total / pageSize : parseInt(total / pageSize) + 1) - 1)">…</span>
+                        <a class="page-numbers"
+                           v-if="(pageNo != (total % pageSize == 0 ? total / pageSize : parseInt(total / pageSize) + 1)) && total != 0"
+                           @click="current">{{(total % pageSize == 0 ? total / pageSize : parseInt(total / pageSize)
+                            +
+                            1)}}</a>
+                        <a class="next"
+                           v-if="(pageNo != (total % pageSize == 0 ? total / pageSize : parseInt(total / pageSize) + 1)) && total != 0"
+                           @click="older">Older »</a>
+                    </nav>
+
+                    <div class="comment-from">
+                        <p style="font-style:italic">
+                            <a href="https://segmentfault.com/markdown" target="_blank">
+                                <i style="color: black" class="bi bi-markdown-fill"></i>
+                            </a>
+                            Markdown Supported while
+                            <i class="bi bi-code-slash"></i>
+                            Forbidden
+                        </p>
+                        <div class="comment-textarea">
+                            <textarea v-model="content" placeholder="你是我一生只会遇见一次的惊喜 ..." name="comment" id="comment"
+                                      class="comment-body" rows="5" tabindex="4"></textarea>
+                            <label class="input-label">你是我一生只会遇见一次的惊喜 ...</label>
+                        </div>
+                        <div class="comment-info-container">
+                            <div class="comment-avatar">
+                                <img :src="avatar" alt="">
+                            </div>
+                            <div class="popup comment-popup-avatar">
+                                <span id="popup-text" class="popup-text">输入QQ号将自动拉取昵称和头像</span>
+                                <input v-model="nickName" type="text" placeholder="昵称或QQ号 (必填)" name="nickName"
+                                       id="nickName" @focus="focus" @blur="blur">
+                            </div>
+                            <div class="popup comment-popup">
+                                <input v-model="email" type="text" placeholder="邮箱（选填）">
+                            </div>
+                        </div>
+                        <input type="submit" class="comment-from-input" value="BiuBiuBiu~" @click="submit">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 底部footer -->
+    <footer id="footer" class="site-footer m-opacity" role="contentinfo">
+        <inori-footer></inori-footer>
+    </footer>
+
+    <div class="comment-from-reply-y">
+        <div class="comment-from-reply">
+            <div style="padding-top: 20px;margin-left: 20px;margin-right: 20px; padding-bottom: 20px">
+                <p style="font-style:italic;color: #000;">
+                    <i class="icon-comments"></i>
+                    回复评论
+                </p>
+                <div class="comment-textarea" style="height: 150px;">
+                    <textarea v-model="contentReply" placeholder="你是我一生只会遇见一次的惊喜 ..." name="comment"
+                              class="comment-body" rows="5" tabindex="4"></textarea>
+                    <label class="input-label">你是我一生只会遇见一次的惊喜 ...</label>
+                </div>
+                <div class="comment-info-container" style="padding-top: 60px;">
+                    <div id="comment-avatar-reply" class="comment-avatar">
+                        <img :src="avatar" alt=""/>
+                    </div>
+                    <div class="popup comment-popup-avatar" style="width: 300px;margin-bottom: 20px">
+                        <span id="popup-text-reply" class="popup-text" style="width: 300px;margin-left: -150px;">
+                            输入QQ号将自动拉取昵称和头像
+                        </span>
+                        <input v-model="nickName" type="text" placeholder="昵称或QQ号 (昵称 )" name="nickNameReply"
+                               id="nickNameReply" @focus="focusReply" @blur="blurReply">
+                    </div>
+                    <div class="popup comment-popup" style="width: 300px">
+                        <input v-model="email" type="text" placeholder="邮箱">
+                    </div>
+                </div>
+                <input name="submit" type="submit" class="comment-from-input" value="BiuBiuBiu~" @click="submitReply">
+                <a class="comment_close" @click="close"><i class="bi bi-x-lg"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 消息提示 -->
+    <div class="butterBar butterBar-center">
+        <p id="butterBar-common" class="butterBar-success">{{message}}</p>
+    </div>
+
+</section>
+
+<div id="mobile-nav">
+    <div class="mobile-avatar">
+        <img src="image/gc.jpg" alt="">
+    </div>
+    <p class="mobile-p">Yuzuriha Inori</p>
+    <div class="mobile-search">
+        <input class="mobile-search-input" v-model="keywords" type="search" placeholder="Search..."
+               @keydown="search($event)">
+    </div>
+    <ul>
+        <li>
+            <a href="http://ai-inori.top" class="m-margin-left-small">
+                <i class="bi-house-fill"></i><span class="fa">首页</span>
+            </a>
+        </li>
+        <li>
+            <a class="m-margin-left-small fa-type" @click="searchTypes">
+                <i class="bi-front"></i><span class="fa">分类</span>
+            </a>
+            <ul class="sub-menu">
+                <li v-for="item of types" :key="item">
+                    <a class="m-margin-left-small" @click="searchType(item)">
+                        <span class="fa-code">{{item.name}}</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="archives.html" class="m-margin-left-small">
+                <i class="bi-archive-fill"></i><span class="fa">归档</span>
+            </a>
+        </li>
+        <li>
+            <a href="message.html" class="m-margin-left-small">
+                <i class="bi-pencil-square"></i><span class="fa">留言板</span>
+            </a>
+        </li>
+        <!--<li>
+            <a href="#" class="m-margin-left-small">
+                <i class="icon-link"></i><span class="fa">友人帐</span>
+            </a>
+        </li>-->
+        <li>
+            <a href="picture.html" class="m-margin-left-small">
+                <i class="bi-images"></i><span class="fa">照片墙</span>
+            </a>
+        </li>
+        <li>
+            <a href="about.html" class="m-margin-left-small">
+                <i class="icon-leaf"></i><span class="fa">关于我</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<!-- 置顶图标 -->
+<div id="back-to-top" class="back-to-top cd-top faa-float cd-is-visible" style="display: none"></div>
+<button id="mobile-top" style="display: none"><i class="el-icon-arrow-up"></i></button>
+
+<!-- 看板娘 -->
+<div class="waifu">
+    <div class="waifu-tips"></div>
+    <canvas id="live2d" width="250" height="450" class="live2d"></canvas>
+</div>
+
+<script type="text/javascript" src="lib/l2dwidget/L2Dwidget.js"></script>
+<script type="text/javascript" src="lib/l2dwidget/live2d.js"></script>
+<script type="text/javascript" src="lib/l2dwidget/waifu-tips.js"></script>
+<script type="text/javascript" src="lib/element-plus/index.full.js"></script>
+<script type="text/javascript" src="lib/waypoint/jquery.waypoints.min.js"></script>
+<script type="text/javascript" src="lib/lazyload/lazyload.min.js"></script>
+<script type="text/javascript" src="https://lnori-blog.oss-cn-hangzhou.aliyuncs.com/lib/js/header.js"></script>
+<script type="text/javascript" src="https://lnori-blog.oss-cn-hangzhou.aliyuncs.com/lib/js/footer.js"></script>
+<script type="text/javascript" src="https://lnori-blog.oss-cn-hangzhou.aliyuncs.com/lib/js/mobile-nav.js"></script>
+<script type="text/javascript" src="https://lnori-blog.oss-cn-hangzhou.aliyuncs.com/lib/js/massage.js"></script>
+<script type="text/javascript" src="https://lnori-blog.oss-cn-hangzhou.aliyuncs.com/lib/js/item.js"></script>
+
+<script type="text/javascript">
+
+    //看板娘
+    loadlive2d("live2d", "lib/l2dwidget/model/mashiro/seifuku.model.json");
+
+    function show_runtime() {
+        window.setTimeout("show_runtime()", 1000);
+        const X = new Date("01/01/2022 00:00:00");
+        const Y = new Date();
+        const T = (Y.getTime() - X.getTime());
+        const M = 24 * 60 * 60 * 1000;
+        const a = T / M;
+        const A = Math.floor(a);
+        const b = (a - A) * 24;
+        const B = Math.floor(b);
+        const c = (b - B) * 60;
+        const C = Math.floor((b - B) * 60);
+        const D = Math.floor((c - C) * 60);
+        document.getElementById('runtime_span').innerHTML = A + "天" + B + "小时" + C + "分" + D + "秒"
+    }
+
+    show_runtime();
+
+</script>
+
+</body>
+</html>

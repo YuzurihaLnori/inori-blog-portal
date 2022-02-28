@@ -1,0 +1,1048 @@
+body {
+    width: 100%;
+    height: 100%;
+    background-image: url(../image/image.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.login-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    font-family: zhanku, 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif', source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia, serif;
+    background: url(../image/image.png) no-repeat fixed center center;
+    background-size: cover;
+}
+
+.login-area {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 380px;
+    height: 320px;
+}
+
+.login-title {
+    color: #cddeff;
+    text-align: center;
+    margin-top: 35px;
+}
+
+.login-input {
+    position: relative;
+    font-size: 14px;
+    display: inline-block;
+    width: 100%;
+}
+
+.login-input input {
+    background-color: transparent;
+    border-color: #fff;
+    border-radius: 4px;
+    color: #cddeff;
+    padding-left: 50px;
+    font-family: zhanku, 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif', source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia, serif;
+}
+
+.login-input input::-webkit-input-placeholder {
+    color: #cddeff;
+}
+
+.login-input-content {
+    -webkit-appearance: none;
+    background-image: none;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    display: inline-block;
+    font-size: inherit;
+    height: 40px;
+    line-height: 40px;
+    outline: none;
+    margin-top: 35px;
+    margin-left: 40px;
+    transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+    width: 80%;
+}
+
+.login-input-span {
+    font-size: 25px;
+    position: absolute;
+    left: 54px;
+    top: 38px;
+    color: #fff;
+}
+
+.login-input-span i:after {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 20px;
+    background-color: #cddeff;
+    top: 8px;
+    left: 28px;
+}
+
+.login-button {
+    width: 80%;
+    margin-top: 30px;
+    margin-left: 40px;
+    padding: 10px 0;
+    font-size: 14px;
+    color: #cddeff;
+    border-color: #cddeff;
+    background-color: transparent;
+    font-family: zhanku, 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif', source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia, serif;
+}
+
+.tip {
+    display: none;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000000;
+    font-family: zhanku, 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif', source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia, serif;
+}
+
+.common-success {
+    background: #00d1bf;
+    color: #fff;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    display: inline-block;
+    font-size: 14px;
+    padding: 16px 25px;
+    width: 250px;
+    height: 50px;
+}
+
+.common-error {
+    background: #f56c6c;
+    color: #fff;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    display: inline-block;
+    font-size: 14px;
+    padding: 16px 25px;
+    width: 250px;
+    height: 50px;
+}
+
+.system-gird-header {
+    width: 100%;
+    min-height: 60px;
+    height: 71px;
+    opacity: 0.9;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 1);
+    z-index: 11002;
+    top: 0;
+    left: 0;
+    border-bottom: 1px solid #464646;
+    font-size: 15px;
+}
+
+.system-site-branding {
+    float: left;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: relative;
+    font-family: miao, 'Merriweather Sans', Helvetica, Tahoma, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif;
+    color: #00d1bf;
+    text-decoration-line: none;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.system-site-top ul li a {
+    color: rgba(255, 255, 255, .7) !important;
+}
+
+.system-site-top ul li a:hover {
+    color: #00d1bf !important;
+}
+
+.user-info {
+    position: relative;
+    float: right;
+    margin-top: 5px;
+}
+
+.user-info img {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    margin-right: 100px;
+}
+
+.user-info-span {
+    position: absolute;
+    right: 40%;
+    top: 25%;
+    font-size: 15px;
+    font-weight: 400;
+    color: #fff;
+    font-family: miao, 'Merriweather Sans', Helvetica, Tahoma, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei', 'WenQuanYi Micro Hei', sans-serif;
+}
+
+.logout {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background: url(../image/logout.png) no-repeat 50%;
+    background-size: 28px 28px;
+    right: 6%;
+}
+
+.page-container {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    font-family: zhanku, 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif', source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia, serif;
+}
+
+.search-panel {
+    margin-top: 100px;
+    margin-left: 265px;
+    width: 1000px;
+    background: #F3F4F5;
+}
+
+.search-keyword {
+    width: 300px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.search-keyword label {
+    width: 75px;
+    margin-left: 20px;
+}
+
+.search-keyword input {
+    width: 200px;
+    height: 35px;
+    border-radius: 7px;
+    margin-left: 5px;
+    padding-top: 2px;
+    padding-left: 7px;
+    border: 1px solid #c0c4cc;
+    outline-color: #2b8091;
+    font-family: zhanku, 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif', source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia, serif;
+}
+
+.search-keyword i {
+    position: absolute;
+    top: 30px;
+    right: 20px;
+}
+
+.search-keyword ul {
+    position: absolute;
+    background: #fff;
+    list-style: none;
+    top: 70px;
+    right: 40px;
+    width: 200px;
+    text-align: left;
+    white-space: nowrap;
+    z-index: 9999;
+    border-radius: 5px;
+    box-shadow: 0 1px 15px -8px rgb(0 0 0);
+    -webkit-animation: fadeInUp .3s .1s ease both;
+    -moz-animation: fadeInUp .3s .1s ease both;
+}
+
+.search-keyword ul:before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    margin-left: -10px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent #fff
+}
+
+.search-keyword-li {
+    margin: 5px;
+    padding-top: 5px;
+    padding-left: 20px;
+}
+
+.search-keyword ul li:hover {
+    background: #f5f7fa;
+}
+
+.search-button {
+    position: relative;
+    display: inline-block;
+    padding-left: 225px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.search-button button {
+    height: 35px;
+    width: 73px;
+    margin-left: 10px;
+    background: #00B5AD;
+    border: 1px solid #00B5AD;
+    border-radius: 5px;
+    color: #fff;
+    font-family: zhanku, 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif', source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia, serif;
+}
+
+.blog-add {
+    margin-left: 265px;
+    width: 1000px;
+    background: #F3F4F5;
+}
+
+.blog-add button {
+    width: 73px;
+    height: 32px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    border-radius: 3px;
+    float: right;
+    color: #00B5AD;
+    border: 1px solid #00B5AD;
+    font-size: 12px;
+    text-transform: none;
+    outline: none;
+    font-family: zhanku, 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif', source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia, serif;
+}
+
+.blog-add button:hover {
+    background: #00B5AD;
+    border: 1px solid #00B5AD;
+    color: #fff;
+}
+
+.blog-table-title {
+    margin-left: 265px;
+    width: 1000px;
+    background: #F3F4F5;
+}
+
+.pure-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    empty-cells: show;
+    width: 100%;
+    border: 1px solid #cbcbcb;
+}
+
+.pure-table caption {
+    color: #000;
+    font: italic 85%/1 arial, sans-serif;
+    padding: 1em 0;
+    text-align: center;
+}
+
+.pure-table td, .pure-table th {
+    border: 1px solid #ebeef5;
+    font-size: inherit;
+    margin: 0;
+    overflow: visible;
+    padding: .5em 1em;
+    height: 37px;
+}
+
+.pure-table thead {
+    background-color: #e0e0e0;
+    color: #000;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+.pure-table tbody {
+    text-align: center;
+}
+
+.pure-table td {
+    background-color: #fff;
+    height: 40.2px !important;
+}
+
+.pure-table td img {
+    width: 50px;
+    height: 50px;
+}
+
+.pure-table-odd td {
+    background-color: #f6f5f8;
+}
+
+input[type='checkbox'].switch {
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    width: 40px;
+    height: 20px;
+    background: #ccc;
+    border-radius: 10px;
+    transition: border-color .3s, background-color .3s;
+}
+
+input[type='checkbox'].switch::after {
+    content: '';
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0, 0, 2px, #999;
+    transition: .4s;
+    top: 2px;
+    position: absolute;
+    left: 2px;
+}
+
+input[type='checkbox'].switch:checked {
+    background: #00B5AD;
+}
+
+input[type='checkbox'].switch:checked::after {
+    content: '';
+    position: absolute;
+    left: 55%;
+    top: 2px;
+}
+
+.blog-update {
+    border-color: transparent;
+    color: #019179;
+    background: transparent;
+    padding-left: 0;
+    padding-right: 5px;
+    font-family: zhanku, 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif', source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia, serif;
+}
+
+.blog-delete {
+    border-color: transparent;
+    color: #f56c6c;
+    background: transparent;
+    font-family: zhanku, 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif', source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia, serif;
+}
+
+.blog-table-footer {
+    margin-left: 265px;
+    width: 1000px;
+    background: #F3F4F5;
+}
+
+.blog-pagination {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-right: 30px;
+    white-space: nowrap;
+    color: #303133;
+    font-weight: 500;
+    text-align: right;
+}
+
+.blog-pagination button {
+    border: none;
+}
+
+.blog-pagination a {
+    color: #303133 !important;
+}
+
+.common-delete-div {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 200007;
+    background: rgba(0, 0, 0, .65);
+    font-family: zhanku, 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif', source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia, serif;
+}
+
+.delete-div {
+    -webkit-transform: none;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 420px;
+    background: hsla(0, 0%, 100%, .95);
+    border-radius: 2px;
+    box-sizing: border-box;
+}
+
+.delete-header {
+    padding: 20px 20px 10px;
+    box-sizing: inherit;
+}
+
+.delete-header span {
+    line-height: 24px;
+    font-size: 18px;
+    color: #303133;
+}
+
+.delete-header i {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 16px;
+}
+
+.delete-body {
+    overflow-y: auto;
+    padding: 10px 10px !important;
+    color: #606266;
+    font-size: 14px;
+    word-break: break-all;
+}
+
+.delete-body i {
+    position: absolute;
+    top: 71px;
+    left: 25px;
+}
+
+.delete-body p {
+    position: absolute;
+    left: 60px;
+}
+
+.delete-footer {
+    padding: 10px 20px 20px;
+    text-align: right;
+    box-sizing: border-box;
+}
+
+.blog-input {
+    position: relative;
+    background-image: url(../image/image.png);
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+.title-input {
+    padding-top: 150px;
+}
+
+.title-input input {
+    width: 300px;
+    height: 40px;
+    margin-left: 10px;
+    padding-top: 2px;
+    padding-left: 7px;
+    background-color: transparent;
+    border-color: #fff;
+    border-radius: 4px;
+    color: #cddeff;
+    outline: none;
+    font-family: zhanku, 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif', source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia, serif;
+}
+
+.title-input input::-webkit-input-placeholder {
+    color: #cddeff;
+}
+
+.type-input {
+    position: relative;
+}
+
+.type-input input {
+    width: 300px;
+    height: 40px;
+    margin-top: 30px;
+    margin-left: 10px;
+    padding-top: 2px;
+    padding-left: 7px;
+    background-color: transparent;
+    border-color: #fff;
+    border-radius: 4px;
+    color: #cddeff;
+    outline: none;
+    font-family: zhanku, 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif', source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia, serif;
+}
+
+.type-input i {
+    position: absolute;
+    top: 42px;
+    right: 38.3%;
+    color: #cddeff;
+}
+
+.type-input ul {
+    position: absolute;
+    list-style: none;
+    background: #fff;
+    top: 85px;
+    left: 42.8%;
+    width: 300px;
+    text-align: left;
+    white-space: nowrap;
+    z-index: 9999;
+    border-radius: 5px;
+    box-shadow: 0 1px 15px -8px rgb(0 0 0);
+    -webkit-animation: fadeInUp .3s .1s ease both;
+    -moz-animation: fadeInUp .3s .1s ease both;
+}
+
+.type-input ul:before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    margin-left: -10px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent #fff;
+}
+
+.type-input-li {
+    margin: 5px;
+    padding-top: 5px;
+    padding-left: 20px;
+}
+
+.type-input ul li:hover {
+    background: #f5f7fa;
+}
+
+.type-input input::-webkit-input-placeholder {
+    color: #cddeff;
+}
+
+.flag-input {
+    position: relative;
+}
+
+.flag-input input {
+    width: 300px;
+    height: 40px;
+    margin-top: 30px;
+    margin-left: 10px;
+    padding-top: 2px;
+    padding-left: 7px;
+    background-color: transparent;
+    border-color: #fff;
+    border-radius: 4px;
+    color: #cddeff;
+    outline: none;
+    font-family: zhanku, 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif', source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia, serif;
+}
+
+.flag-input i {
+    position: absolute;
+    top: 42px;
+    right: 38.3%;
+    color: #cddeff;
+}
+
+.flag-input ul {
+    position: absolute;
+    list-style: none;
+    background: #fff;
+    top: 85px;
+    left: 42.8%;
+    width: 300px;
+    text-align: left;
+    white-space: nowrap;
+    z-index: 9999;
+    border-radius: 5px;
+    box-shadow: 0 1px 15px -8px rgb(0 0 0);
+    -webkit-animation: fadeInUp .3s .1s ease both;
+    -moz-animation: fadeInUp .3s .1s ease both;
+}
+
+.flag-input ul:before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    margin-left: -10px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent #fff;
+}
+
+.flag-input-li {
+    margin: 5px;
+    padding-top: 5px;
+    padding-left: 20px;
+}
+
+.flag-input ul li:hover {
+    background: #f5f7fa;
+}
+
+.flag-input input::-webkit-input-placeholder {
+    color: #cddeff;
+}
+
+.image-input {
+    position: relative;
+}
+
+.image-input label {
+    position: relative;
+    text-align: right;
+    vertical-align: middle;
+    float: left;
+    top: 50px;
+    left: 37.7%;
+}
+
+.avatar-uploader {
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    width: 178px;
+    height: 178px;
+    top: 30px;
+    left: 42%;
+}
+
+.avatar-uploader-icon:hover {
+    border-color: #409EFF;
+}
+
+.avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+    border: 1px dashed #d9d9d9;
+}
+
+.avatar-delete-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+    border: 1px dashed #d9d9d9;
+}
+
+.avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+    border: 1px dashed #409EFF;
+}
+
+.avatar-uploader:hover .image-span {
+    display: block;
+    background: rgba(0, 0, 0, .1803921568627451);
+}
+
+.image-span {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+}
+
+.desc-input {
+    position: relative;
+}
+
+.desc-input label {
+    position: relative;
+    top: 55px;
+}
+
+.desc-input textarea {
+    height: 168px;
+    width: 700px;
+    margin-top: 80px;
+    padding-top: 5px;
+    padding-left: 7px;
+    background-color: transparent;
+    border-color: #fff;
+    border-radius: 4px;
+    color: #cddeff;
+    outline: none;
+    font-family: zhanku, 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif', source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia, serif;
+}
+
+.desc-input textarea::-webkit-input-placeholder {
+    color: #cddeff;
+}
+
+.content-input {
+    position: relative;
+}
+
+.content-input label {
+    position: relative;
+    top: 20px;
+}
+
+#md-context {
+    margin-top: 40px;
+}
+
+.blog-button {
+    height: 35px;
+    width: 73px;
+    margin-right: 10px;
+    background: #E0E1E2;
+    border: none;
+    border-radius: 5px;
+    color: rgba(0, 0, 0, .6);
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1em;
+    font-style: normal;
+    text-align: center;
+    font-family: zhanku, 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif', source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia, serif;
+}
+
+.blog-button-save {
+    height: 35px;
+    width: 73px;
+    margin-right: 10px;
+    background: #1B1C1D;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1em;
+    font-style: normal;
+    text-align: center;
+    font-family: zhanku, 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif', source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia, serif;
+}
+
+.blog-button-push {
+    height: 35px;
+    width: 73px;
+    margin-right: 10px;
+    background: #00B5AD;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1em;
+    font-style: normal;
+    text-align: center;
+    font-family: zhanku, 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif', source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia, serif;
+}
+
+.type-save {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 200007;
+    background: rgba(0, 0, 0, .65);
+    font-family: zhanku, 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif', source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia, serif;
+}
+
+.type-div {
+    -webkit-transform: none;
+    transform: none;
+    left: 0;
+    position: relative;
+    margin: 20vh auto 0;
+    width: 600px;
+    background: hsla(0, 0%, 100%, .95);
+    border-radius: 2px;
+    box-sizing: border-box;
+}
+
+.type-header {
+    padding: 20px 20px 10px;
+    box-sizing: inherit;
+}
+
+.type-header span {
+    line-height: 24px;
+    font-size: 18px;
+    color: #303133;
+}
+
+.type-header i {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 16px;
+}
+
+.type-body {
+    overflow-y: auto;
+    padding: 20px 20px !important;
+    color: #606266;
+    font-size: 14px;
+    word-break: break-all;
+}
+
+.type-body div {
+    width: 450px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
+.type-body label {
+    text-align: left;
+    width: 150px;
+    vertical-align: middle;
+    float: left;
+    font-size: 14px;
+    line-height: 40px;
+    padding: 0 12px 0 0;
+    box-sizing: border-box;
+    color: #000;
+    font-weight: 700;
+}
+
+.type-body input {
+    position: relative;
+    font-size: 14px;
+    display: inline-block;
+    max-width: 300px;
+    width: 100%;
+    height: 35px;
+    line-height: 35px !important;
+    padding-left: 15px;
+    padding-right: 30px;
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    color: #606266;
+    outline-color: #00B5AD;
+    transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+    font-family: zhanku, 'Noto Serif SC', 'Source Han Serif SC', 'Source Han Serif', source-han-serif-sc, 'PT Serif', 'SongTi SC', 'MicroSoft Yahei', Georgia, serif;
+}
+
+.type-footer {
+    padding: 10px 20px 20px;
+    text-align: right;
+    box-sizing: border-box;
+}
+
+.cancel {
+    padding: 0 20px !important;
+    height: 35px !important;
+    font-size: 12px;
+    border-radius: 3px;
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #dcdfe6;
+    color: #606266;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    font-weight: 500;
+    margin: 0 15px 0 0;
+}
+
+.determine {
+    padding: 0 20px !important;
+    height: 35px !important;
+    font-size: 12px;
+    border-radius: 3px;
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #00B5AD;
+    border: 1px solid #00B5AD;
+    color: #fff;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    font-weight: 500;
+}
+
+.picture-uploader {
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    width: 100px !important;
+    height: 100px !important;
+    padding-right: 300px;
+}
+
+.picture-uploader-icon:hover {
+    border-color: #409EFF;
+}
+
+.picture-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    border: 1px dashed #d9d9d9;
+}
+
+.picture-delete-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    border: 1px dashed #d9d9d9;
+}
+
+.picture {
+    width: 100px;
+    height: 100px;
+    display: block;
+}
+
+.picture-uploader:hover .image-span {
+    display: block;
+    width: 100px;
+    height: 100px;
+    background: rgba(0, 0, 0, .1803921568627451);
+}
