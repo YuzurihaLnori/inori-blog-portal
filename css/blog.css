@@ -89,7 +89,7 @@ textarea {
 a {
     background-color: transparent;
     text-decoration: none;
-    cursor: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/ayuda.cur), auto
+    cursor: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/cursor/ayuda.cur), auto
 }
 
 a:active,
@@ -98,7 +98,7 @@ a:hover {
 }
 
 a:active {
-    cursor: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/work.cur), auto
+    cursor: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/cursor/work.cur), auto
 }
 
 ::-webkit-scrollbar-thumb {
@@ -107,7 +107,7 @@ a:active {
 
 p {
     margin-bottom: 1.5em;
-    cursor: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/texto.cur), auto
+    cursor: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/cursor/texto.cur), auto
 }
 
 @font-face {
@@ -123,7 +123,7 @@ p {
 }
 
 body {
-    cursor: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/normal.cur), auto
+    cursor: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/cursor/normal.cur), auto
 }
 
 /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
@@ -152,8 +152,8 @@ body {
 /*字体*/
 @font-face {
     font-family: "zhanku";
-    src: url("https://cdn.jsdelivr.net/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.eot"); /* IE9 */
-    src: url("https://cdn.jsdelivr.net/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */ url("https://cdn.jsdelivr.net/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.woff") format("woff"), /* chrome、firefox */ url("https://cdn.jsdelivr.net/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+ */ url("https://cdn.jsdelivr.net/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.svg#zhanku") format("svg"); /* iOS 4.1- */
+    src: url("https://jsdelivr.amogu.cn/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.eot"); /* IE9 */
+    src: url("https://jsdelivr.amogu.cn/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */ url("https://jsdelivr.amogu.cn/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.woff") format("woff"), /* chrome、firefox */ url("https://jsdelivr.amogu.cn/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+ */ url("https://jsdelivr.amogu.cn/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.svg#zhanku") format("svg"); /* iOS 4.1- */
     font-style: normal;
     font-weight: normal;
 }
@@ -169,7 +169,7 @@ body {
     transition: all .5s ease-in-out;
     background-size: contain;
     -webkit-transition: all .5s ease-in-out;
-    cursor: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/No_Disponible.cur), auto;
+    cursor: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/cursor/No_Disponible.cur), auto;
     opacity: 1
 }
 
@@ -369,11 +369,11 @@ video {
 }
 
 .video-play {
-    background-image: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/play@32x32.png);
+    background-image: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/images/play@32x32.png);
 }
 
 .video-pause {
-    background-image: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/pause@32x32.png);
+    background-image: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/images/pause@32x32.png);
     display: none;
 }
 
