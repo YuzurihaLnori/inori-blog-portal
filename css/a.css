@@ -188,7 +188,7 @@ audio:not([controls]) {
 a {
     background-color: transparent;
     text-decoration: none;
-    cursor: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/cursor/ayuda.cur), auto
+    cursor: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/ayuda.cur), auto
 }
 
 a:active, a:hover {
@@ -196,7 +196,7 @@ a:active, a:hover {
 }
 
 a:active {
-    cursor: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/cursor/work.cur), alias
+    cursor: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/work.cur), alias
 }
 
 abbr[title] {
@@ -351,7 +351,7 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
     margin-bottom: 1.5em;
-    cursor: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/cursor/texto.cur), auto
+    cursor: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/texto.cur), auto
 }
 
 cite, dfn, em, i {
@@ -438,7 +438,7 @@ html {
 body {
     background: #fff;
     background-attachment: fixed;
-    cursor: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/cursor/normal.cur), auto
+    cursor: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/normal.cur), auto
 }
 
 blockquote:after, blockquote:before, q:after, q:before {
@@ -629,15 +629,15 @@ a:active, a:hover {
 }
 
 .loadvideo, .video-play {
-    background-image: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/images/play@32x32.png)
+    background-image: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/play@32x32.png)
 }
 
 .video-pause {
-    background-image: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/images/pause@32x32.png)
+    background-image: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/pause@32x32.png)
 }
 
 #video-add {
-    background-image: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/images/add@32x32.png);
+    background-image: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/add@32x32.png);
     bottom: 45px;
     display: none
 }
@@ -1779,11 +1779,11 @@ h1.page-title.mb- {
     z-index: 99;
     width: 70px;
     height: 900px;
-    background: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/images/scroll.png) no-repeat center;
+    background: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/scroll.png) no-repeat center;
     background-size: contain;
     -webkit-transition: all .5s ease-in-out;
     transition: all .5s ease-in-out;
-    cursor: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/cursor/No_Disponible.cur), auto;
+    cursor: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/No_Disponible.cur), auto;
     opacity: 1
 }
 
@@ -2486,7 +2486,7 @@ h1.page-title.mb- {
     height: 40px;
     text-align: center;
     line-height: 45px;
-    background-image: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/images/disqus-preloader.svg);
+    background-image: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/disqus-preloader.svg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: auto 100%
@@ -3738,16 +3738,16 @@ li.feature-2 {
 }
 
 .headertop.filter-grid:before {
-    background-image: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/images/grid.png)
+    background-image: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/grid.png)
 }
 
 .headertop.filter-dot:before {
-    background-image: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/images/dot.gif)
+    background-image: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/dot.gif)
 }
 
 @media (max-width: 860px) {
     .headertop.filter-dot:before {
-        background-image: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/images/grid.png)
+        background-image: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/grid.png)
     }
 }
 
@@ -4099,7 +4099,7 @@ i.iconfont.js-toggle-search.iconsearch {
     visibility: visible;
     opacity: .99;
     animation: elastic .5s;
-    background-image: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.2.1/img/other/iloli.gif);
+    background-image: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.2.1/img/other/iloli.gif);
     background-repeat: no-repeat;
     background-position: bottom right
 }
@@ -4274,7 +4274,7 @@ body.dark .ins-section .fa {
 
 .ins-section .ins-section-header, .ins-section .ins-search-item {
     padding: 8px 15px;
-    cursor: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/cursor/ayuda.cur), auto
+    cursor: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/ayuda.cur), auto
 }
 
 .ins-section .ins-search-item .search-keyword {
@@ -4309,7 +4309,7 @@ body.dark .ins-section .fa {
     font-size: 12px;
     color: #9a9a9a;
     margin: 5px 0 0;
-    cursor: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/cursor/ayuda.cur), auto
+    cursor: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/ayuda.cur), auto
 }
 
 .ins-section .ins-search-item:hover, .ins-section .ins-search-item.active {
@@ -4916,7 +4916,7 @@ i.iconfont.down {
 }
 
 #pagination .loading, #bangumi-pagination .loading {
-    background: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/images/wordpress-rotating-ball-o.svg);
+    background: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/wordpress-rotating-ball-o.svg);
     background-position: center;
     background-repeat: no-repeat;
     color: #555;
@@ -5827,7 +5827,7 @@ body.dark .user-menu-option a:hover {
 .oshimai {
     height: 2em;
     width: 6.11em;
-    background: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/images/oshimai.svg);
+    background: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/oshimai.svg);
     background-size: cover;
     margin: 0 auto
 }
@@ -5998,7 +5998,7 @@ body.dark .user-menu-option a:hover {
     border: 0;
     color: #fff;
     line-height: 1;
-    cursor: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/cursor/No_Disponible.cur), auto;
+    cursor: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/No_Disponible.cur), auto;
     font-size: 14px;
     font-weight: 500;
     padding: 7px 15px;
@@ -6147,7 +6147,7 @@ button.botui-actions-buttons-button::-moz-focus-inner, input.botui-actions-text-
 }
 
 button.botui-actions-buttons-button {
-    cursor: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/cursor/No_Disponible.cur), auto;
+    cursor: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/No_Disponible.cur), auto;
     -webkit-appearance: button
 }
 
@@ -7557,7 +7557,7 @@ a.toc-link {
 }
 
 #emotion-toggle, .emoji-item, .emotion-box, .emotion-item, .on-hover, .tieba-container span {
-    cursor: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/cursor/No_Disponible.cur), auto
+    cursor: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/No_Disponible.cur), auto
 }
 
 .alignright {
@@ -8043,7 +8043,7 @@ a.toc-link {
     padding: 2px;
     text-shadow: none;
     border-radius: 0 0 5px 5px;
-    cursor: url(https://jsdelivr.amogu.cn/gh/moezx/cdn@3.1.9/img/Sakura/cursor/texto.cur), auto
+    cursor: url(https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/cursor/texto.cur), auto
 }
 
 .highlight-wrap code[data-rel]:before {
@@ -8609,8 +8609,8 @@ h1[id*=toc-head]:before, h2[id*=toc-head]:before, h3[id*=toc-head]:before, h4[id
 
 @font-face {
     font-family: "zhanku";
-    src: url("https://jsdelivr.amogu.cn/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.eot");
-    src: url("https://jsdelivr.amogu.cn/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.eot?#iefix") format("embedded-opentype"), url("https://jsdelivr.amogu.cn/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.woff") format("woff"), url("https://jsdelivr.amogu.cn/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.ttf") format("truetype"), url("https://jsdelivr.amogu.cn/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.svg#zhanku") format("svg");
+    src: url("https://cdn.jsdelivr.net/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.eot");
+    src: url("https://cdn.jsdelivr.net/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.eot?#iefix") format("embedded-opentype"), url("https://cdn.jsdelivr.net/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.woff") format("woff"), url("https://cdn.jsdelivr.net/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.ttf") format("truetype"), url("https://cdn.jsdelivr.net/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.svg#zhanku") format("svg");
     font-style: normal;
     font-weight: 400;
     font-display: swap
@@ -8618,8 +8618,8 @@ h1[id*=toc-head]:before, h2[id*=toc-head]:before, h3[id*=toc-head]:before, h4[id
 
 @font-face {
     font-family: "miao";
-    src: url("https://jsdelivr.amogu.cn/gh/Fog-Forest/cdn@1.9.4/Sakura/LOGO/miao.eot");
-    src: url("https://jsdelivr.amogu.cn/gh/Fog-Forest/cdn@1.9.4/Sakura/LOGO/miao.eot?#iefix") format("embedded-opentype"), url("https://jsdelivr.amogu.cn/gh/Fog-Forest/cdn@1.9.4/Sakura/LOGO/miao.woff") format("woff"), url("https://jsdelivr.amogu.cn/gh/Fog-Forest/cdn@1.9.4/Sakura/LOGO/miao.ttf") format("truetype"), url("https://jsdelivr.amogu.cn/gh/Fog-Forest/cdn@1.9.4/Sakura/LOGO/miao.svg#miao") format("svg");
+    src: url("https://cdn.jsdelivr.net/gh/Fog-Forest/cdn@1.9.4/Sakura/LOGO/miao.eot");
+    src: url("https://cdn.jsdelivr.net/gh/Fog-Forest/cdn@1.9.4/Sakura/LOGO/miao.eot?#iefix") format("embedded-opentype"), url("https://cdn.jsdelivr.net/gh/Fog-Forest/cdn@1.9.4/Sakura/LOGO/miao.woff") format("woff"), url("https://cdn.jsdelivr.net/gh/Fog-Forest/cdn@1.9.4/Sakura/LOGO/miao.ttf") format("truetype"), url("https://cdn.jsdelivr.net/gh/Fog-Forest/cdn@1.9.4/Sakura/LOGO/miao.svg#miao") format("svg");
     font-style: normal;
     font-weight: 400;
     font-display: swap
