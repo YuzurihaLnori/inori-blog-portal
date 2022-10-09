@@ -369,11 +369,11 @@ video {
 }
 
 .video-play {
-    background-image: url(https://cdn.staticaly.com/gh/YuzurihaLnori/inori-blog-portal/master/image/play@32x32.png);
+    background-image: url(https://cdn.staticaly.com/gh/YuzurihaLnori/inori-blog-portal/master/image/play%4032x32.png);
 }
 
 .video-pause {
-    background-image: url(https://cdn.staticaly.com/gh/YuzurihaLnori/inori-blog-portal/master/image/pause@32x32.png);
+    background-image: url(https://cdn.staticaly.com/gh/YuzurihaLnori/inori-blog-portal/master/image/pause%4032x32.png);
     display: none;
 }
 
