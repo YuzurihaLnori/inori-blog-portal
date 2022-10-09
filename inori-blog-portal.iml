@@ -16,5 +16,8 @@
     <orderEntry type="library" name="type" level="application" />
     <orderEntry type="library" name="archives" level="application" />
     <orderEntry type="library" name="about" level="application" />
+    <orderEntry type="library" name="prism" level="application" />
+    <orderEntry type="library" name="tocbot" level="application" />
+    <orderEntry type="library" name="typo" level="application" />
   </component>
 </module>
