@@ -287,7 +287,7 @@ body {
 
 #banner_wave_1 {
     height: 65px;
-    background: url(../image/wave_1.png) repeat-x;
+    background: url(https://cdn.staticaly.com/gh/YuzurihaLnori/inori-blog-portal/master/image/wave_1.png) repeat-x;
     _filter: alpha(opacity=100);
     position: absolute;
     bottom: 0;
@@ -306,7 +306,7 @@ body {
 
 #banner_wave_2 {
     height: 85px;
-    background: url(../image/wave_2.png) repeat-x;
+    background: url(https://cdn.staticaly.com/gh/YuzurihaLnori/inori-blog-portal/master/image/wave_2.png) repeat-x;
     _filter: alpha(opacity=80);
     position: absolute;
     bottom: 0;
