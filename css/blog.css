@@ -89,7 +89,7 @@ textarea {
 a {
     background-color: transparent;
     text-decoration: none;
-    cursor: url(./cursor/ayuda.cur), auto
+    cursor: url(../cursor/ayuda.cur), auto
 }
 
 a:active,
@@ -98,7 +98,7 @@ a:hover {
 }
 
 a:active {
-    cursor: url(./cursor/work.cur), auto
+    cursor: url(../cursor/work.cur), auto
 }
 
 ::-webkit-scrollbar-thumb {
@@ -107,7 +107,7 @@ a:active {
 
 p {
     margin-bottom: 1.5em;
-    cursor: url(./cursor/texto.cur), auto
+    cursor: url(../cursor/texto.cur), auto
 }
 
 @font-face {
@@ -123,7 +123,7 @@ p {
 }
 
 body {
-    cursor: url(./cursor/normal.cur), auto
+    cursor: url(../cursor/normal.cur), auto
 }
 
 /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
@@ -153,7 +153,7 @@ body {
 @font-face {
     font-family: "zhanku";
     src: url("https://cdn.jsdelivr.net/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.eot"); /* IE9 */
-    src: url("https://cdn.jsdelivr.net/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */ url("./font/zhanku.woff") format("woff"), /* chrome、firefox */ url("./font/zhanku.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+ */ url("https://cdn.jsdelivr.net/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.svg#zhanku") format("svg"); /* iOS 4.1- */
+    src: url("https://cdn.jsdelivr.net/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */ url("../font/zhanku.woff") format("woff"), /* chrome、firefox */ url("../font/zhanku.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+ */ url("https://cdn.jsdelivr.net/gh/Fog-Forest/cdn@2.0.1/Sakura/fonts/zhanku/zhanku.svg#zhanku") format("svg"); /* iOS 4.1- */
     font-style: normal;
     font-weight: normal;
 }
@@ -165,11 +165,11 @@ body {
     z-index: 2;
     width: 70px;
     height: 900px;
-    background: url(./image/scroll.png);
+    background: url(../image/scroll.png);
     transition: all .5s ease-in-out;
     background-size: contain;
     -webkit-transition: all .5s ease-in-out;
-    cursor: url(./cursor/No_Disponible.cur), auto;
+    cursor: url(../cursor/No_Disponible.cur), auto;
     opacity: 1
 }
 
@@ -287,7 +287,7 @@ body {
 
 #banner_wave_1 {
     height: 65px;
-    background: url(./image/wave_1.png) repeat-x;
+    background: url(../image/wave_1.png) repeat-x;
     _filter: alpha(opacity=100);
     position: absolute;
     bottom: 0;
@@ -306,7 +306,7 @@ body {
 
 #banner_wave_2 {
     height: 85px;
-    background: url(./image/wave_2.png) repeat-x;
+    background: url(../image/wave_2.png) repeat-x;
     _filter: alpha(opacity=80);
     position: absolute;
     bottom: 0;
@@ -369,11 +369,11 @@ video {
 }
 
 .video-play {
-    background-image: url(./image/play%4032x32.png);
+    background-image: url(../image/play.png);
 }
 
 .video-pause {
-    background-image: url(./image/pause%4032x32.png);
+    background-image: url(../image/pause.png);
     display: none;
 }
 
