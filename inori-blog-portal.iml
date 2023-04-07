@@ -19,5 +19,6 @@
     <orderEntry type="library" name="prism" level="application" />
     <orderEntry type="library" name="tocbot" level="application" />
     <orderEntry type="library" name="typo" level="application" />
+    <orderEntry type="library" name="vue.global" level="application" />
   </component>
 </module>
