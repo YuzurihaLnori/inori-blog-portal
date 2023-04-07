@@ -113,7 +113,7 @@ p {
 @font-face {
     font-family: "zhanku";
     src: url(../font/zhanku.eot); /* IE9 */
-    src: url(../font/zhanku.eot) format("embedded-opentype"), /* IE6-IE8 */ url(../font/zhanku.woff) format("woff"), /* chrome、firefox */ url(../font/zhanku.ttf) format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+ */ url(../font/zhanku.svg) format("svg"); /* iOS 4.1- */
+    src: url(../font/zhanku.eot) format("embedded-opentype"), /* IE6-IE8 */ url(https://cdn.staticaly.com/gh/YuzurihaLnori/inori-blog-portal/master/font/zhanku.woff) format("woff"), /* chrome、firefox */ url(../font/zhanku.ttf) format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+ */ url(../font/zhanku.svg) format("svg"); /* iOS 4.1- */
     font-style: normal;
     font-weight: normal;
 }
@@ -2266,7 +2266,7 @@ h1.archives-title {
     height: 100%;
     position: relative;
     overflow: hidden;
-    background-image: url(../image/rain.jpg);
+    background-image: url(https://cdn.staticaly.com/gh/YuzurihaLnori/inori-blog-portal/master/image/rain.jpg);
     background-position: top center;
     background-repeat: no-repeat;
     background-size: cover;
