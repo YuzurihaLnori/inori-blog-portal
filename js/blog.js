@@ -377,9 +377,6 @@ new Waypoint({
     }
 });
 
-//看板娘
-loadlive2d("live2d", "../lib/l2Dwidget/model/mashiro/seifuku.model.json");
-
 if (document.body.clientWidth > 860) {
     $(window).scroll(function () {
         $('.toc-container').css("height", $('.blog-content').outerHeight());
